@@ -1,5 +1,13 @@
 package VueControleur;
 
+import VueControleur.composants.Horloge;
+import modele.SimulateurPotager;
+import modele.environnement.CaseCultivable;
+import modele.environnement.CaseNonCultivable;
+import modele.environnement.varietes.Legume;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,12 +18,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import modele.SimulateurPotager;
-import modele.environnement.*;
-import modele.environnement.varietes.Legume;
 
 
 /** Cette classe a deux fonctions :
@@ -35,15 +37,17 @@ public class VueControleurPotager extends JFrame implements Observer {
     private ImageIcon icoVide;
     private ImageIcon icoMur;
 
-
+    // Grille du potager
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
+    // ToolBar Horloge
+    private Horloge horloge;
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
         sizeY = _simulateurPotager.SIZE_Y;
         simulateurPotager = _simulateurPotager;
-
+        horloge = new Horloge();
         chargerLesIcones();
         placerLesComposantsGraphiques();
         //ajouterEcouteurClavier(); // si besoin
@@ -87,16 +91,18 @@ public class VueControleurPotager extends JFrame implements Observer {
         // permet de center la fenêtre au lieu d'en haut à gauche
         setLocationRelativeTo(null);
 
+        // Info diverse
         JPanel infos = new JPanel();
 
         JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
         jtf.setEditable(false);
-        JButton jb = new JButton("Test");
         infos.add(jtf);
-        infos.add(jb);
-
         add(infos, BorderLayout.EAST);
 
+        // Barre gestion de temps
+        add(horloge.getHorloge(), BorderLayout.NORTH);
+
+        // Grille pour les cases du potager
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
 
         tabJLabel = new JLabel[sizeX][sizeY];

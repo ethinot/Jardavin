@@ -16,6 +16,7 @@ import java.util.Random;
 
 public class SimulateurPotager {
 
+    // final est équivalent à const en c++
     public static final int SIZE_X = 20;
     public static final int SIZE_Y = 10;
 
