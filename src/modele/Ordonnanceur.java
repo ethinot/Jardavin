@@ -62,4 +62,11 @@ public class Ordonnanceur extends Observable {
         }
     }
     public void add(Runnable r) {lst.add(r);}
+
+    public String getJourMoisAnnee() {
+        return tempsModel.getJourMoisAnnee();
+    }
+    public String getHeureMinuteSeconde() {
+        return tempsModel.getHeureMinuteSeconde();
+    }
 }
