@@ -14,6 +14,7 @@ import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
@@ -42,6 +43,8 @@ public class VueControleurPotager extends JFrame implements Observer {
 
     // ToolBar Horloge
     private Horloge horloge;
+
+    private LocalDateTime tempsVue;
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
@@ -168,9 +171,14 @@ public class VueControleurPotager extends JFrame implements Observer {
         }
     }
 
+    private void mettreAJourTemps () {
+
+    }
+
     @Override
     public void update(Observable o, Object arg) {
         mettreAJourAffichage();
+        mettreAJourTemps();
         /*
         SwingUtilities.invokeLater(new Runnable() {
                     @Override
