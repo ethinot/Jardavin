@@ -2,6 +2,7 @@ package modele;
 
 import modele.temps.TempsModel;
 
+import java.time.LocalDateTime;
 import java.util.Observable;
 import java.util.TimerTask;
 import java.util.Vector;
@@ -62,11 +63,8 @@ public class Ordonnanceur extends Observable {
     }
     public void add(Runnable r) {lst.add(r);}
 
-    public String getJourMoisAnnee() {
-        return tempsModel.getJourMoisAnnee();
-    }
-    public String getHeureMinuteSeconde() {
-        return tempsModel.getHeureMinuteSeconde();
+    public LocalDateTime getTime() {
+        return tempsModel.getTempsModel();
     }
     public void setPeriode(int nouvellePeriode) {
         tempsModel.setPeriode(nouvellePeriode);

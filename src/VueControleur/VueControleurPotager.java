@@ -86,7 +86,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         setTitle("A vegetable garden");
         // on peut aussi lui passer un objet Dimension
         // on taille avant de setLocation pour éviter tous problèmes
-        setSize(540, 250);
+        setSize(700, 500);
         // par défaut HID_ON_CLOSE
         // ici si on avait deux JFRAM cela fermerait les deux si on en ferme q'une
         // donc c'est mieux d'utiliser DISPOSE_ON_CLOSE
@@ -95,7 +95,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         setLocationRelativeTo(null);
 
         // Barre affichage de temps
-        add(tempsVue.getTempsVue(), BorderLayout.EAST);
+        add(tempsVue.getTempsVueConteneur(), BorderLayout.EAST);
 
         // Slide Bar pour accélération du temps
         add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
