@@ -1,11 +1,15 @@
 package modele;
 
+import modele.temps.TempsModel;
+
 import java.util.Observable;
+import java.util.TimerTask;
 import java.util.Vector;
+import java.util.Timer;
 
 import static java.lang.Thread.*;
 
-public class Ordonnanceur extends Observable implements Runnable {
+public class Ordonnanceur extends Observable {
 
     private static Ordonnanceur ordonnanceur;
 
@@ -16,45 +20,55 @@ public class Ordonnanceur extends Observable implements Runnable {
         }
         return ordonnanceur;
     }
-
     private SimulateurPotager simulateurPotager;
-
-    private long pause;
+    private Timer frequenceMAJ;
+    private TempsModel tempsModel;
+    private int annee;
+    private int mois;
+    private int jour;
     private Vector<Runnable> lst = new Vector<Runnable>(); // liste synchronisée
 
+    private void updateModel() {
+        boolean update = true; // TODO A changer chaque runnable doit avoir un champ update
 
-
-
-    public void start(long _pause) {
-        pause = _pause;
-        new Thread(this).start();
-    }
-
-    public void add(Runnable r) {lst.add(r);}
-
-    @Override
-    public void run() {
-        boolean update = true;
-
-        while(true) {
-
-            for (Runnable r : lst) {
-                r.run();
-            }
-
-            if (update) {
-                setChanged();
-                notifyObservers();
-                //update = false;
-            }
-
-            //update = true; // TODO : variable à déporter pour découpler le raffraichissement de la simulation
-            try {
-                sleep(pause);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
+        for (Runnable r : lst) {
+            r.run();
         }
 
+        if (update) {
+            setChanged();
+            notifyObservers();
+        }
+    }
+    public void start(int _annee, int _mois, int _jour) {
+        annee = _annee;
+        mois = _mois;
+        jour = _jour;
+        this.frequenceMAJ = new Timer(); // Lancement du timer chargé de la mise à jour du model
+        this.tempsModel = new TempsModel(annee, mois, jour); // Lancement du timer chargé d'incrémenter le temps
+        TimerTask updateTask = new TimerTask() {
+            @Override
+            public void run() {
+                updateModel();
+            }
+        };
+        frequenceMAJ.scheduleAtFixedRate(updateTask, 0, 1000 / 30);
+    }
+
+    public void stop() {
+        if (frequenceMAJ != null) {
+            frequenceMAJ.cancel();
+        }
+    }
+    public void add(Runnable r) {lst.add(r);}
+
+    public String getJourMoisAnnee() {
+        return tempsModel.getJourMoisAnnee();
+    }
+    public String getHeureMinuteSeconde() {
+        return tempsModel.getHeureMinuteSeconde();
+    }
+    public void setPeriode(int nouvellePeriode) {
+        tempsModel.setPeriode(nouvellePeriode);
     }
 }

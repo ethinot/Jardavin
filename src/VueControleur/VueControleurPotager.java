@@ -1,5 +1,15 @@
 package VueControleur;
 
+import VueControleur.composants.AccelerationTemps;
+import VueControleur.composants.TempsVue;
+import modele.Ordonnanceur;
+import modele.SimulateurPotager;
+import modele.environnement.CaseCultivable;
+import modele.environnement.CaseNonCultivable;
+import modele.environnement.varietes.Legume;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -10,12 +20,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import modele.SimulateurPotager;
-import modele.environnement.*;
-import modele.environnement.varietes.Legume;
 
 
 /** Cette classe a deux fonctions :
@@ -35,18 +39,21 @@ public class VueControleurPotager extends JFrame implements Observer {
     private ImageIcon icoVide;
     private ImageIcon icoMur;
 
-
+    // Grille du potager
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
+    private TempsVue tempsVue;
+    private AccelerationTemps accelerateur;
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
         sizeY = _simulateurPotager.SIZE_Y;
         simulateurPotager = _simulateurPotager;
-
+        tempsVue = new TempsVue();
+        Ordonnanceur.getOrdonnanceur().addObserver(tempsVue);
+        accelerateur = new AccelerationTemps();
         chargerLesIcones();
         placerLesComposantsGraphiques();
-        //ajouterEcouteurClavier(); // si besoin
     }
 /*
     private void ajouterEcouteurClavier() {
@@ -87,16 +94,13 @@ public class VueControleurPotager extends JFrame implements Observer {
         // permet de center la fenêtre au lieu d'en haut à gauche
         setLocationRelativeTo(null);
 
-        JPanel infos = new JPanel();
+        // Barre affichage de temps
+        add(tempsVue.getTempsVue(), BorderLayout.EAST);
 
-        JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
-        jtf.setEditable(false);
-        JButton jb = new JButton("Test");
-        infos.add(jtf);
-        infos.add(jb);
+        // Slide Bar pour accélération du temps
+        add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
 
-        add(infos, BorderLayout.EAST);
-
+        // Grille pour les cases du potager
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
 
         tabJLabel = new JLabel[sizeX][sizeY];
