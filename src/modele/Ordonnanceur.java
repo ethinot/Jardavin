@@ -29,7 +29,6 @@ public class Ordonnanceur extends Observable {
     private Vector<Runnable> lst = new Vector<Runnable>(); // liste synchronisée
 
     private void updateModel() {
-        System.out.println("Ca update bien");
         boolean update = true; // TODO A changer chaque runnable doit avoir un champ update
 
         for (Runnable r : lst) {
@@ -68,5 +67,8 @@ public class Ordonnanceur extends Observable {
     }
     public String getHeureMinuteSeconde() {
         return tempsModel.getHeureMinuteSeconde();
+    }
+    public void setPeriode(int nouvellePeriode) {
+        tempsModel.setPeriode(nouvellePeriode);
     }
 }

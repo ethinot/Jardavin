@@ -41,6 +41,6 @@ public class TempsModel {
         periodeActuel = periode;
         miseAJourTemps.cancel();
         miseAJourTemps = new Timer();
-        miseAJourTemps.schedule(new IncrementerTempsModel(this), 0, periode);
+        miseAJourTemps.schedule(new IncrementerTempsModel(this), 0, periodeActuel);
     }
 }

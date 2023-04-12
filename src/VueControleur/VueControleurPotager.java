@@ -1,5 +1,6 @@
 package VueControleur;
 
+import VueControleur.composants.AccelerationTemps;
 import VueControleur.composants.TempsVue;
 import modele.Ordonnanceur;
 import modele.SimulateurPotager;
@@ -42,6 +43,7 @@ public class VueControleurPotager extends JFrame implements Observer {
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private TempsVue tempsVue;
+    private AccelerationTemps accelerateur;
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
@@ -49,6 +51,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         simulateurPotager = _simulateurPotager;
         tempsVue = new TempsVue();
         Ordonnanceur.getOrdonnanceur().addObserver(tempsVue);
+        accelerateur = new AccelerationTemps();
         chargerLesIcones();
         placerLesComposantsGraphiques();
     }
@@ -93,6 +96,9 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         // Barre affichage de temps
         add(tempsVue.getTempsVue(), BorderLayout.EAST);
+
+        // Slide Bar pour accélération du temps
+        add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
 
         // Grille pour les cases du potager
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
