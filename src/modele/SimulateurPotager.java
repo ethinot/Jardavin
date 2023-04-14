@@ -9,6 +9,7 @@ package modele;
 import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
+import modele.environnement.varietes.Legume;
 
 import java.awt.Point;
 import java.util.Random;
@@ -76,6 +77,12 @@ public class SimulateurPotager {
     public void actionUtilisateur(int x, int y) {
         if (grilleCases[x][y] != null) {
             grilleCases[x][y].actionUtilisateur();
+        }
+    }
+
+    public void planterLegume(int x, int y, Legume legume) {
+        if (grilleCases[x][y] != null) {
+            grilleCases[x][y].planterLegume(legume);
         }
     }
 

@@ -11,6 +11,8 @@ import modele.environnement.varietes.Legume;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -20,6 +22,12 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.imageio.ImageIO;
+import javax.swing.*;
+
+import modele.SimulateurPotager;
+import modele.environnement.*;
+import modele.environnement.varietes.Legume;
 
 
 /** Cette classe a deux fonctions :
@@ -28,18 +36,37 @@ import java.util.logging.Logger;
  *
  */
 public class VueControleurPotager extends JFrame implements Observer {
-    private SimulateurPotager simulateurPotager; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
 
-    private int sizeX; // taille de la grille affichée
-    private int sizeY;
+    //region Constantes
+    static final int ICONE_HEIGHT = 150;
+    static final int ICONE_WIDTH = 150;
+    static final int ICONE_COLUMN = 390;
+    static final int ICONE_ROW = 390;
+    //endregion
 
+    //region Tailles grille
+    private final int sizeX; // taille de la grille affichée
+    private final int sizeY;
+    //endregion
+
+    //region Icones
     // icones affichées dans la grille
     private ImageIcon icoSalade;
+    private ImageIcon icoCarotte;
     private ImageIcon icoTerre;
     private ImageIcon icoVide;
     private ImageIcon icoMur;
+    private ImageIcon icoChampignon;
+    private ImageIcon icoOrange;
+    private ImageIcon icoTomate;
+    private ImageIcon icoRadis;
+    //endregion
 
     // Grille du potager
+    private SimulateurPotager simulateurPotager; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
+    private Legume legumeEnMain;
+    private CaseNonCultivable objetEnMain;
+
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private TempsVue tempsVue;
@@ -72,13 +99,17 @@ public class VueControleurPotager extends JFrame implements Observer {
 */
 
     private void chargerLesIcones() {
-    	// image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons	
-    
+    	// image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons
 
-        icoSalade = chargerIcone("Images/data.png", 0, 0, 120, 120);//chargerIcone("Images/Pacman.png");
+        icoSalade = chargerIcone("Images/data.png", 0, 0, ICONE_WIDTH, ICONE_HEIGHT);//chargerIcone("Images/Pacman.png");
         icoVide = chargerIcone("Images/Vide.png");
         icoMur = chargerIcone("Images/Mur.png");
         icoTerre = chargerIcone("Images/Terre.png");
+        icoCarotte = chargerIcone("Images/data.png", 1 * ICONE_ROW, 1 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
+        icoChampignon = chargerIcone("Images/data.png", 1 * ICONE_ROW, 0 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
+        icoOrange = chargerIcone("Images/data.png", 0 * ICONE_ROW, 2 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
+        icoTomate = chargerIcone("Images/data.png", 8 * ICONE_ROW, 3 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
+        icoRadis = chargerIcone("Images/data.png", 2 * ICONE_ROW, 2 * ICONE_ROW, ICONE_WIDTH, ICONE_HEIGHT);
     }
 
     // Procédure qui permet la construction de la fenêtre
@@ -99,8 +130,84 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         // Slide Bar pour accélération du temps
         add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
+        JButton bSalade = new JButton();
+        bSalade.setIcon(icoSalade);
+        bSalade.setMargin(new Insets(0, 0, 0, 0));
+        bSalade.setContentAreaFilled(false);
+
+        bSalade.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getSource());
+                legumeEnMain = new Salade();
+                //Change le curseur en salade
+//                setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
+//                        icoSalade.getImage(),
+//                        new Point(0,0),"custom cursor"));
+            }
+        });
+        JButton bCarotte = new JButton();
+        bCarotte.setFocusPainted(false);
+        bCarotte.setMargin(new Insets(0, 0, 0, 0));
+        bCarotte.setContentAreaFilled(false);
+        bCarotte.setIcon(icoCarotte);
+        bCarotte.setBorderPainted(false);
+        bCarotte.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                System.out.println(e.getSource());
+                legumeEnMain = new Carotte();
+            }
+        });
+
+        JButton bTomate = new JButton();
+        bTomate.setIcon(icoTomate);
+        bTomate.setContentAreaFilled(false);
+        bTomate.setBorderPainted(false);
+        bTomate.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                legumeEnMain = new Tomate();
+            }
+        });
+
+        JButton bRadis = new JButton();
+        bRadis.setIcon(icoRadis);
+        bRadis.setContentAreaFilled(false);
+        bRadis.setBorderPainted(false);
+        bRadis.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                legumeEnMain = new Radis();
+            }
+        });
+
+        JButton bTerre = new JButton();
+        bTerre.setIcon(icoTerre);
+        bTerre.setContentAreaFilled(false);
+        bTerre.setBorderPainted(false);
+        bTerre.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                legumeEnMain = null;
+            }
+        });
 
         // Grille pour les cases du potager
+//        JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
+//        jtf.setEditable(false);
+//        infos.add(jtf);
+
+        GridLayout gl = new GridLayout(1, 0);
+        infos.setLayout(gl);
+        infos.add(bSalade);
+        infos.add(bCarotte);
+        infos.add(bTomate);
+        infos.add(bRadis);
+        infos.add(bTerre);
+
+        add(infos, BorderLayout.NORTH);
+
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
 
         tabJLabel = new JLabel[sizeX][sizeY];
@@ -124,7 +231,7 @@ public class VueControleurPotager extends JFrame implements Observer {
                 tabJLabel[x][y].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        simulateurPotager.actionUtilisateur(xx, yy);
+                        simulateurPotager.planterLegume(xx, yy, legumeEnMain);
                     }
                 });
             }
@@ -147,8 +254,10 @@ public class VueControleurPotager extends JFrame implements Observer {
 
                         switch (legume.getVariete()) {
                             case salade: tabJLabel[x][y].setIcon(icoSalade); break;
+                            case carotte: tabJLabel[x][y].setIcon(icoCarotte); break;
+                            case tomate: tabJLabel[x][y].setIcon(icoTomate); break;
+                            case radis: tabJLabel[x][y].setIcon(icoRadis); break;
                         }
-
                     } else {
                         tabJLabel[x][y].setIcon(icoTerre);
                     }

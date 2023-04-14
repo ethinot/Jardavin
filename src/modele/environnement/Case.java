@@ -6,6 +6,7 @@
 package modele.environnement;
 
 import modele.SimulateurPotager;
+import modele.environnement.varietes.Legume;
 
 public abstract class Case implements Runnable {
     protected SimulateurPotager simulateurPotager;
@@ -21,4 +22,6 @@ public abstract class Case implements Runnable {
     public abstract void actionUtilisateur();
 
 
-  }
+    public void planterLegume(Legume legume) {
+    }
+}
