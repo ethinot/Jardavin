@@ -1,6 +1,7 @@
 package modele;
 
 import modele.temps.TempsModel;
+import modele.temps.composants.IncrementerTempsModel;
 
 import java.time.LocalDateTime;
 import java.util.Observable;
@@ -23,7 +24,6 @@ public class Ordonnanceur extends Observable {
     }
     private SimulateurPotager simulateurPotager;
     private Timer frequenceMAJ;
-    private TempsModel tempsModel;
     private int annee;
     private int mois;
     private int jour;
@@ -31,7 +31,7 @@ public class Ordonnanceur extends Observable {
 
     private void updateModel() {
         boolean update = true; // TODO A changer chaque runnable doit avoir un champ update
-
+        System.out.println("---------------TEMPS------------" + TempsModel.getTemps().getTempsModel());
         for (Runnable r : lst) {
             r.run();
         }
@@ -46,7 +46,7 @@ public class Ordonnanceur extends Observable {
         mois = _mois;
         jour = _jour;
         this.frequenceMAJ = new Timer(); // Lancement du timer chargé de la mise à jour du model
-        this.tempsModel = new TempsModel(annee, mois, jour); // Lancement du timer chargé d'incrémenter le temps
+        TempsModel.getTemps().setTemps(annee, mois, jour);
         TimerTask updateTask = new TimerTask() {
             @Override
             public void run() {
@@ -64,9 +64,9 @@ public class Ordonnanceur extends Observable {
     public void add(Runnable r) {lst.add(r);}
 
     public LocalDateTime getTime() {
-        return tempsModel.getTempsModel();
+        return TempsModel.getTemps().getTempsModel();
     }
-    public void setPeriode(int nouvellePeriode) {
-        tempsModel.setPeriode(nouvellePeriode);
+    public void setPeriode(int nouvellePeriode, IncrementerTempsModel incrementeur) {
+        TempsModel.getTemps().setPeriode(nouvellePeriode, incrementeur);
     }
 }

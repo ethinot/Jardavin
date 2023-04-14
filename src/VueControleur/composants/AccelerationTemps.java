@@ -1,5 +1,6 @@
 package VueControleur.composants;
 import modele.Ordonnanceur;
+import modele.temps.composants.IncrementerSeconde;
 
 import javax.swing.event.*;
 import java.awt.*;
@@ -31,6 +32,7 @@ public class AccelerationTemps implements ChangeListener{
     public void stateChanged(ChangeEvent e) {
         int multiplicateur = slider.getValue();
         int nouvellePeriode = periode/(multiplicateur*100);
-        Ordonnanceur.getOrdonnanceur().setPeriode(nouvellePeriode);
+        IncrementerSeconde incr = new IncrementerSeconde();
+        Ordonnanceur.getOrdonnanceur().setPeriode(nouvellePeriode, incr);
     }
 }
