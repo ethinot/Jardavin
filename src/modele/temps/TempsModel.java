@@ -13,13 +13,16 @@ public class TempsModel {
     private LocalDateTime tempsModel;
     private Timer miseAJourTemps;
     private int periodeActuel;
+
     // Format pour formater les dates
-
     private DateTimeFormatter formatJour = DateTimeFormatter.ofPattern("dd");
-    private DateTimeFormatter formatMois = formatMois = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
-    private DateTimeFormatter formatAnnee = formatAnnee = DateTimeFormatter.ofPattern("yyyy");
-    private DateTimeFormatter formatHeureMinuteSeconde = formatHeureMinuteSeconde = DateTimeFormatter.ofPattern("HH:mm:ss");
-
+    private DateTimeFormatter formatMoisEcrit = DateTimeFormatter.ofPattern("MMMM", Locale.FRANCE);
+    private DateTimeFormatter formatMois = DateTimeFormatter.ofPattern("MM");
+    private DateTimeFormatter formatAnnee  = DateTimeFormatter.ofPattern("yyyy");
+    private DateTimeFormatter formatHeureMinuteSeconde = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private DateTimeFormatter formatHeure = DateTimeFormatter.ofPattern("HH");
+    private DateTimeFormatter formatMinute = DateTimeFormatter.ofPattern("mm");
+    private DateTimeFormatter formatSeconde = DateTimeFormatter.ofPattern("ss");
 
     public TempsModel (int _annee, int _mois, int _jour) {
         tempsModel = LocalDateTime.of(_annee, _mois, _jour, 6, 0, 0);
@@ -43,15 +46,19 @@ public class TempsModel {
         return temps;
     }
 
+    public LocalDateTime getTempsModel() {
+        return tempsModel;
+    }
+
     public String getTempsHeureMinuteSeconde() { return tempsModel.format(formatHeureMinuteSeconde); }
     public String getTempsJour() { return tempsModel.format(formatJour); }
-    public String getTempsMois() { return tempsModel.format(formatMois); }
+    public String getTempsMois() { return tempsModel.format(formatMoisEcrit); }
     public String getTempsAnne() { return tempsModel.format(formatAnnee); }
 
-    public int getTempsEnSeconde() {
-        String tempsEnEntier = String.valueOf(tempsModel.getYear()) + String.valueOf(tempsModel.getMonthValue()) + String.valueOf(tempsModel.getDayOfMonth()) +
-                String.valueOf(tempsModel.getHour()) + String.valueOf(tempsModel.getMinute()) + String.valueOf(tempsModel.getSecond());
-        int res = Integer.parseInt(tempsEnEntier);
+    public long getTempsEnSeconde() {
+        String tempsEnEntier = String.valueOf(tempsModel.getYear()) + tempsModel.format(formatMois) + tempsModel.format(formatJour) +
+                tempsModel.format(formatHeure) + tempsModel.format(formatMinute) + tempsModel.format(formatSeconde);
+        long res = Long.parseLong(tempsEnEntier);
         return res;
     }
 
