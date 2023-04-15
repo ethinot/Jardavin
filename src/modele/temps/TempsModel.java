@@ -54,6 +54,7 @@ public class TempsModel {
     public String getTempsJour() { return tempsModel.format(formatJour); }
     public String getTempsMois() { return tempsModel.format(formatMoisEcrit); }
     public String getTempsAnne() { return tempsModel.format(formatAnnee); }
+    public String getTempsHeure(){ return tempsModel.format(formatHeure); }
 
     public long getTempsEnSeconde() {
         String tempsEnEntier = String.valueOf(tempsModel.getYear()) + tempsModel.format(formatMois) + tempsModel.format(formatJour) +

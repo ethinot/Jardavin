@@ -6,7 +6,7 @@ import modele.Ordonnanceur;
 import modele.SimulateurPotager;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
-import modele.environnement.varietes.Legume;
+import modele.environnement.varietes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -197,7 +197,7 @@ public class VueControleurPotager extends JFrame implements Observer {
 //        JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
 //        jtf.setEditable(false);
 //        infos.add(jtf);
-
+        JPanel infos = new JPanel();
         GridLayout gl = new GridLayout(1, 0);
         infos.setLayout(gl);
         infos.add(bSalade);
