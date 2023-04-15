@@ -2,6 +2,7 @@
 import VueControleur.VueControleurPotager;
 import modele.Ordonnanceur;
 import modele.SimulateurPotager;
+import modele.temps.TempsModel;
 
 import javax.swing.*;
 import javax.swing.plaf.nimbus.NimbusLookAndFeel;
