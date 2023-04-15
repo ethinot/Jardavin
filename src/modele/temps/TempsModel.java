@@ -2,6 +2,7 @@ package modele.temps;
 
 import modele.temps.composants.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -60,6 +61,13 @@ public class TempsModel {
                 tempsModel.format(formatHeure) + tempsModel.format(formatMinute) + tempsModel.format(formatSeconde);
         long res = Long.parseLong(tempsEnEntier);
         return res;
+    }
+
+    public int getTempsEcouler(LocalDateTime dateTime) {
+        LocalDateTime tempsActuel = this.tempsModel;
+        Duration duration = Duration.between(dateTime, tempsActuel);
+        long secondesEcoulees = duration.getSeconds();
+        return (int) secondesEcoulees;
     }
 
     public void setPeriode(int periode, IncrementerTempsModel incrementeur) {
