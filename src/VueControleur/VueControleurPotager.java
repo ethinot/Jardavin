@@ -1,8 +1,6 @@
 package VueControleur;
 
-import VueControleur.composants.AccelerationTemps;
 import VueControleur.composants.TempsVue;
-import modele.Ordonnanceur;
 import modele.SimulateurPotager;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
@@ -11,8 +9,6 @@ import modele.environnement.varietes.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.image.BufferedImage;
@@ -22,12 +18,6 @@ import java.util.Observable;
 import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.imageio.ImageIO;
-import javax.swing.*;
-
-import modele.SimulateurPotager;
-import modele.environnement.*;
-import modele.environnement.varietes.Legume;
 
 
 /** Cette classe a deux fonctions :
@@ -70,15 +60,12 @@ public class VueControleurPotager extends JFrame implements Observer {
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private TempsVue tempsVue;
-    private AccelerationTemps accelerateur;
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
         sizeY = _simulateurPotager.SIZE_Y;
         simulateurPotager = _simulateurPotager;
         tempsVue = new TempsVue();
-        Ordonnanceur.getOrdonnanceur().addObserver(tempsVue);
-        accelerateur = new AccelerationTemps();
         chargerLesIcones();
         placerLesComposantsGraphiques();
     }
@@ -129,7 +116,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         add(tempsVue.getTempsVueConteneur(), BorderLayout.EAST);
 
         // Slide Bar pour accélération du temps
-        add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
+        //add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
         JButton bSalade = new JButton();
         bSalade.setIcon(icoSalade);
         bSalade.setMargin(new Insets(0, 0, 0, 0));
@@ -197,16 +184,18 @@ public class VueControleurPotager extends JFrame implements Observer {
 //        JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
 //        jtf.setEditable(false);
 //        infos.add(jtf);
-        JPanel infos = new JPanel();
-        GridLayout gl = new GridLayout(1, 0);
-        infos.setLayout(gl);
-        infos.add(bSalade);
-        infos.add(bCarotte);
-        infos.add(bTomate);
-        infos.add(bRadis);
-        infos.add(bTerre);
 
-        add(infos, BorderLayout.NORTH);
+        //JToolBar toolBar = new JToolBar();
+        JPanel toolBar = new JPanel();
+        GridLayout toolBarLayout = new GridLayout(1, 0);
+        toolBar.setLayout(toolBarLayout);
+        toolBar.add(bSalade);
+        toolBar.add(bCarotte);
+        toolBar.add(bTomate);
+        toolBar.add(bRadis);
+        toolBar.add(bTerre);
+
+        add(toolBar, BorderLayout.NORTH);
 
         JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
 

@@ -31,7 +31,6 @@ public class Ordonnanceur extends Observable {
 
     private void updateModel() {
         boolean update = true; // TODO A changer chaque runnable doit avoir un champ update
-        System.out.println("---------------TEMPS------------" + TempsModel.getTemps().getTempsModel());
         for (Runnable r : lst) {
             r.run();
         }
@@ -63,9 +62,6 @@ public class Ordonnanceur extends Observable {
     }
     public void add(Runnable r) {lst.add(r);}
 
-    public LocalDateTime getTime() {
-        return TempsModel.getTemps().getTempsModel();
-    }
     public void setPeriode(int nouvellePeriode, IncrementerTempsModel incrementeur) {
         TempsModel.getTemps().setPeriode(nouvellePeriode, incrementeur);
     }
