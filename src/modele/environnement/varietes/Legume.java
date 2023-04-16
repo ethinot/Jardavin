@@ -3,6 +3,7 @@ package modele.environnement.varietes;
 import modele.temps.TempsModel;
 
 import java.text.DecimalFormat;
+import java.time.LocalDateTime;
 
 public abstract class Legume {
 
@@ -15,19 +16,21 @@ public abstract class Legume {
     public long nbHeuresEcoulees;
 
     //Heure à laquelle la salade a été plantée
-    public long tempsDePlantage = temps.getTempsEnSeconde() / 3600;
+    public LocalDateTime tempsDePlantage;
 
     //Nombre de jours qu'il faut à la salade pour pousser
     public int tempsDeCroissance;
 
     //Nombre d'heures qu'il faut à la salade pour pousser
-    protected int tempsDeCroissanceEnHeures = tempsDeCroissance * 60;
+    public int tempsDeCroissanceEnHeures = tempsDeCroissance * 60;
 
     //Jour du mois auquel la salade a été planté
     public int jourDePlantage = Integer.parseInt(temps.getTempsJour());
 
     //Jour du mois auquel la salade doit être récoltée
     public int jourDeRecolte = (Integer.parseInt(temps.getTempsJour()) + tempsDeCroissance) % 30;
+
+    public double tauxCroissance;
 
     protected DecimalFormat df = new DecimalFormat("0.00");
 

@@ -27,6 +27,8 @@ public class CaseCultivable extends Case {
         legume = _legume;
     }
 
+    public void recolterLegume(Legume _legume){}
+
 //    private Legume changementLegume(){
 //        switch (legume.getVariete()) {
 //            case salade : return legume = new Salade();

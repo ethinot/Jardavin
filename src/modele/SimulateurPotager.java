@@ -10,6 +10,7 @@ import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
 import modele.environnement.varietes.Legume;
+import modele.environnement.varietes.*;
 
 import java.awt.Point;
 import java.util.Random;
@@ -25,6 +26,8 @@ public class SimulateurPotager {
 
     // private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une entité à partir de sa référence
     private Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une entité à partir de ses coordonnées
+
+    Inventaire inventaire;
 
     public SimulateurPotager() {
 
@@ -91,6 +94,17 @@ public class SimulateurPotager {
         //map.put(e, new Point(x, y));
     }
 
+    public void recolterLegume(int x, int y, Legume _legume){
+        if(grilleCases[x][y] != null && grilleCases[x][y] instanceof CaseCultivable){
+            if(_legume instanceof Salade){
+                inventaire.nbSalades++;
+            }else if(_legume instanceof Tomate){
+                inventaire.nbTomates++;
+            }else if(_legume instanceof Carotte){
+                inventaire.nbCarotte++;
+            }
+        }
+    }
 
     private Case objetALaPosition(Point p) {
         Case retour = null;

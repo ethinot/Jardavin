@@ -68,9 +68,8 @@ public class TempsModel {
         miseAJourTemps.cancel();
     }
 
-    public int getTempsEcouler(LocalDateTime dateTime) {
-        LocalDateTime tempsActuel = this.tempsModel;
-        Duration duration = Duration.between(dateTime, tempsActuel);
+    public int getTempsEcouler(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+        Duration duration = Duration.between(dateTime1, dateTime2);
         long secondesEcoulees = duration.getSeconds();
         return (int) secondesEcoulees;
     }
@@ -94,5 +93,19 @@ public class TempsModel {
         if(incrementeur instanceof IncrementerMois) {
             miseAJourTemps.schedule(new IncrementerMois(), 0, periodeActuel);
         }
+    }
+
+    public static void main(String[] args) {
+        temps.getTemps();
+        int tempsEcoulée = temps.getTempsEcouler(temps.getTempsModel(), temps.getTempsModel());
+        //System.out.println(tempsEcoulée);
+
+        LocalDateTime tempsActuel = temps.tempsModel;
+        LocalDateTime temps1 = LocalDateTime.of(2000, 1, 1, 6, 0, 0);
+        LocalDateTime temps2 = LocalDateTime.of(2000, 1, 1, 7, 0, 0);
+        Duration duration = Duration.between(temps1, temps2);
+        long secondes = duration.getSeconds();
+        System.out.println(tempsActuel);
+        System.out.println(secondes);
     }
 }

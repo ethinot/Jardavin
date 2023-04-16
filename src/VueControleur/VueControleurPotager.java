@@ -2,6 +2,7 @@ package VueControleur;
 
 import VueControleur.composants.TempsVue;
 import modele.SimulateurPotager;
+import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
 import modele.environnement.varietes.*;
@@ -11,6 +12,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -60,6 +62,10 @@ public class VueControleurPotager extends JFrame implements Observer {
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private TempsVue tempsVue;
+
+    private JFrame infosCroissance = new JFrame();
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    Point middle = new Point(screenSize.width / 2, screenSize.height / 2);
 
     public VueControleurPotager(SimulateurPotager _simulateurPotager) {
         sizeX = _simulateurPotager.SIZE_X;
@@ -180,6 +186,17 @@ public class VueControleurPotager extends JFrame implements Observer {
             }
         });
 
+        JButton rateau = new JButton();
+        rateau.setIcon(icoChampignon);
+        rateau.setContentAreaFilled(false);
+        rateau.setBorderPainted(false);
+        rateau.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                legumeEnMain = null;
+            }
+        });
+
         // Grille pour les cases du potager
 //        JTextField jtf = new JTextField("infos diverses"); // TODO inclure dans mettreAJourAffichage ...
 //        jtf.setEditable(false);
@@ -221,10 +238,42 @@ public class VueControleurPotager extends JFrame implements Observer {
                     @Override
                     public void mouseClicked(MouseEvent e) {
                         simulateurPotager.planterLegume(xx, yy, legumeEnMain);
+                        //infosLegumeHover(xx, yy, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
+                        if(((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume() != null){
+                            simulateurPotager.recolterLegume(xx, yy, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
+                        }
                     }
+
                 });
             }
         }
+    }
+
+    public void infosLegumeHover(int x, int y, SimulateurPotager _simPot, Legume _legume){
+        infosCroissance.setTitle("Infos Légume");
+        infosCroissance.setSize(50, 100);
+        Point newLocation = new Point(middle.x - (infosCroissance.getWidth() / 2) + 220,
+                middle.y - (infosCroissance.getHeight() / 2) + 170);
+        infosCroissance.setLocation(newLocation);
+        infosCroissance.setUndecorated(false);
+        infosCroissance.setVisible(true);
+        //infosCroissance.setBackground(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        infosCroissance.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+
+        JPanel infos = new JPanel();
+        GridLayout toolBarLayout = new GridLayout(0, 1);
+        infos.setLayout(toolBarLayout);
+        JLabel croissanceEnCoursLabel = new JLabel(String.valueOf(_legume.croissanceEnCours));
+        JLabel jourDeRecolteLabel = new JLabel(String.valueOf(((CaseCultivable) _simPot.getPlateau()[x][y]).getLegume().jourDeRecolte));
+        JLabel jourDePlantageLabel = new JLabel(String.valueOf(((CaseCultivable) _simPot.getPlateau()[x][y]).getLegume().jourDePlantage));
+        JLabel tempsDeCroissanceLabel = new JLabel(String.valueOf(((CaseCultivable) _simPot.getPlateau()[x][y]).getLegume().tempsDeCroissance));
+
+        infos.add(croissanceEnCoursLabel);
+        infos.add(jourDeRecolteLabel);
+        infos.add(jourDePlantageLabel);
+        infos.add(tempsDeCroissanceLabel);
+        System.out.println("Hover CaseCultivable");
+        infosCroissance.add(infos, BorderLayout.CENTER);
     }
 
     
