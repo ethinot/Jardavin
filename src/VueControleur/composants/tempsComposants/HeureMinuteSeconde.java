@@ -6,6 +6,7 @@ import modele.temps.composants.IncrementerMinute;
 import modele.temps.composants.IncrementerSeconde;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
@@ -14,38 +15,32 @@ import java.awt.event.*;
 public class HeureMinuteSeconde extends modelComposant implements ActionListener{
 
     // 4 états différents pour l'acceleration (aucune, seconde, minute, heure)
-    private int compteurAccelerateur = 1;
     public HeureMinuteSeconde() {
-        super();
-    }
-
-    private int incrementeCompteur () {
-        compteurAccelerateur = (compteurAccelerateur + 1) % 4;
-        return compteurAccelerateur;
+        super("Heure,Minute,Seconde");
     }
 
     private void onClick() {
         switch (compteurAccelerateur) {
-            case 0 :
+            case 0 -> {
                 TempsModel.getTemps().setPeriode(1000, new IncrementerSeconde());
-                accelerateur.setText(">");
-                incrementeCompteur();
-                break;
-            case 1 :
+                accelerateur.setText("Sec");
+                incrementeCompteur(4);
+            }
+            case 1 -> {
                 TempsModel.getTemps().setPeriode(10, new IncrementerSeconde());
-                accelerateur.setText(">>");
-                incrementeCompteur();
-                break;
-            case 2 :
+                accelerateur.setText("Min");
+                incrementeCompteur(4);
+            }
+            case 2 -> {
                 TempsModel.getTemps().setPeriode(50, new IncrementerMinute());
-                accelerateur.setText(">>>");
-                incrementeCompteur();
-                break;
-            case 3 :
+                accelerateur.setText("Heure");
+                incrementeCompteur(4);
+            }
+            case 3 -> {
                 TempsModel.getTemps().setPeriode(200, new IncrementerHeure());
-                accelerateur.setText(">>>>");
-                incrementeCompteur();
-                break;
+                accelerateur.setText("NORMAL");
+                incrementeCompteur(4);
+            }
         }
     }
 
@@ -67,7 +62,6 @@ public class HeureMinuteSeconde extends modelComposant implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("JE CLICK");
         onClick();
     }
 }

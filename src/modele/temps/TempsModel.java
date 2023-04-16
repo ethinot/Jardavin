@@ -36,8 +36,8 @@ public class TempsModel {
             tempsModel = LocalDateTime.of(_annee, _mois, _jour, 6, 0, 0);
         }
     }
-    public void setTempsModel(LocalDateTime tempsModel) {
-        this.tempsModel = tempsModel;
+    public void setTempsModel(LocalDateTime _tempsModel) {
+        this.tempsModel = _tempsModel;
     }
 
     public static TempsModel getTemps() {
@@ -64,6 +64,10 @@ public class TempsModel {
         return res;
     }
 
+    public void stopTemps(){
+        miseAJourTemps.cancel();
+    }
+
     public int getTempsEcouler(LocalDateTime dateTime) {
         LocalDateTime tempsActuel = this.tempsModel;
         Duration duration = Duration.between(dateTime, tempsActuel);
@@ -87,8 +91,8 @@ public class TempsModel {
         if(incrementeur instanceof IncrementerJour) {
             miseAJourTemps.schedule(new IncrementerJour(), 0, periodeActuel);
         }
-        if(incrementeur instanceof IncrementerHeure) {
-            miseAJourTemps.schedule(new IncrementerHeure(), 0, periodeActuel);
+        if(incrementeur instanceof IncrementerMois) {
+            miseAJourTemps.schedule(new IncrementerMois(), 0, periodeActuel);
         }
     }
 }
