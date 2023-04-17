@@ -1,5 +1,7 @@
 package modele.environnement.varietes;
 
+import modele.environnement.varietes.conditionsCroissance.Conditions;
+import modele.saison.Saisons;
 import modele.temps.TempsModel;
 
 import java.text.DecimalFormat;
@@ -30,7 +32,14 @@ public abstract class Legume {
     //Jour du mois auquel la salade doit être récoltée
     public int jourDeRecolte = (Integer.parseInt(temps.getTempsJour()) + tempsDeCroissance) % 30;
 
-    public double tauxCroissance;
+    protected double tauxCroissance;
+
+    //Condition de pousse favorable pour les légumes
+    protected Conditions conditionsFavorable;
+
+    public void setTauxCroissance(int humide, float soleil, float temps, Saisons saison) {
+        tauxCroissance = conditionsFavorable.getTauxCroissance(humide, soleil, temps, saison);
+    }
 
     protected DecimalFormat df = new DecimalFormat("0.00");
 
@@ -38,6 +47,5 @@ public abstract class Legume {
     public void nextStep() {
         croissance();
     }
-
     protected abstract void croissance(); // définir selon les conditions
 }

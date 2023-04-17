@@ -62,6 +62,13 @@ public class Ordonnanceur extends Observable {
     }
     public void add(Runnable r) {lst.add(r);}
 
+    public void supprim (Runnable r) {
+        if (r != null) {
+            lst.remove(r);
+        } else System.out.println("Le runnable que doit être supprimer est null");
+
+    }
+
     public void setPeriode(int nouvellePeriode, IncrementerTempsModel incrementeur) {
         TempsModel.getTemps().setPeriode(nouvellePeriode, incrementeur);
     }

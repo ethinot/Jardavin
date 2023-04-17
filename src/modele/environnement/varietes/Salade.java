@@ -1,4 +1,6 @@
 package modele.environnement.varietes;
+import modele.environnement.varietes.conditionsCroissance.CarotteCondition;
+import modele.environnement.varietes.conditionsCroissance.SaladeCondition;
 import modele.temps.TempsModel;
 import modele.temps.composants.IncrementerJour;
 
@@ -7,9 +9,9 @@ import java.time.LocalDateTime;
 
 public class Salade extends Legume {
     //Valeur affectant la croissance selon la météo favorable ou non
-    public double tauxCroissance = 1.0;
 
     public Salade(){
+        conditionsFavorable = new SaladeCondition();
         System.out.println("Vous avez planté votre salade le " + jourDePlantage + " de ce mois");
         if(jourDeRecolte < jourDePlantage){
             System.out.println("Vous devrez la récolter le " + jourDeRecolte + " du mois prochain");
@@ -40,6 +42,7 @@ public class Salade extends Legume {
         System.out.println("Nombre d'heures écoulées : " + nbHeuresEcoulees);
         System.out.println("Salade mûre à " + df.format(croissanceEnCours) + " %");
         System.out.println("temps de croissance en heures : " + tempsDeCroissanceEnHeures);;
+        System.out.println("Taux de croissance" + df.format(tauxCroissance) + " %");
         System.out.println("---------------------------------------------------------");
     }
 }

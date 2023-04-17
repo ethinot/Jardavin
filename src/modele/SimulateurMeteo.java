@@ -1,71 +1,125 @@
 package modele;
 
-import modele.Ordonnanceur;
-import modele.SimulateurPotager;
 import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.varietes.Carotte;
+import modele.environnement.varietes.Radis;
 import modele.environnement.varietes.Salade;
-import modele.environnement.varietes.Varietes;
-
-import java.util.Random;
+import modele.environnement.varietes.Tomate;
+import modele.saison.*;
+import modele.temps.TempsModel;
 
 public class SimulateurMeteo implements Runnable {
     private SimulateurPotager simPot;
 
-    public int humidité; // TODO : mis à jour par le simulateur de météo pour chaque case ()
-    public int offsetHumidité;
-    private float ensoleillement;
-    public float offsetEnsoleillement;
-    private float température;
-    public float offsetTempérature;
+    // TODO : Salade, corote, tomate, radis
 
-    Random r = new Random();
+    private Environnement environnementActuel;
+
+    private Saisons saisonsActuelle;
+    protected int humiditeActuelle;
+    protected float ensoleillementActuel;
+    protected float temperatureActuelle;
 
     public SimulateurMeteo(SimulateurPotager _simPot) {
         Ordonnanceur.getOrdonnanceur().add(this);
         simPot = _simPot;
-        humidité = r.nextInt(100); //Valeur entre 0 et 100
-        ensoleillement = (float)Math.round(r.nextFloat(1) * 100) / 100 ; //Valeur entre 0 et 1 en float
-        température = (float)Math.round((r.nextFloat(40 - (-10)) - 10) * 10) / 10; //Valeur entre -10 et 40
-
-        System.out.println("Humidité : " + humidité);
-        System.out.println("Ensoleillement : " + ensoleillement);
-        System.out.println("Température : " + température);
+        setSaisonsActuelle();
+        setEnvironnementActuel();
+        setHumiditeActuelle();
+        setEnsoleillementActuel();
+        setTemperatureActuelle();
     }
+    public Saisons getSaison(int mois) {
+        if (mois >= 3 && mois <= 5) {
+            return Saisons.printemps;
+        } else if (mois >= 6 && mois <= 8) {
+            return Saisons.ete;
+        } else if (mois >= 9 && mois <= 11) {
+            return Saisons.automne;
+        } else {
+            return Saisons.hiver;
+        }
+    }
+
+    public boolean changementSaison() {
+        Saisons saison = getSaison(TempsModel.getTemps().getTempsModel().getMonthValue());
+        if (saisonsActuelle != saison) {
+            saisonsActuelle = saison;
+            return true;
+        }
+        return false;
+    }
+
+    public void setEnvironnementActuel() {
+        switch (saisonsActuelle) {
+            case printemps -> {
+                environnementActuel = new Printemps();
+            }
+            case ete -> {
+                environnementActuel = new Ete();
+            }
+            case automne -> {
+                environnementActuel = new Automne();
+            }
+            case hiver -> {
+                environnementActuel = new Hiver();
+            }
+        }
+    }
+
+    public void setSaisonsActuelle() {
+        saisonsActuelle = getSaison(TempsModel.getTemps().getTempsModel().getMonthValue());
+    }
+
+    public void setHumiditeActuelle() {
+        this.humiditeActuelle = environnementActuel.getHumidite();
+    }
+
+    public void setEnsoleillementActuel() {
+        this.ensoleillementActuel = environnementActuel.getEnsoleillement();
+    }
+
+    public void setTemperatureActuelle() {
+        this.temperatureActuelle = environnementActuel.getTemperature();
+    }
+
+    // TODO: set Les Autres actuelle
 
     @Override
     public void run() {
-        for(int i = 0; i < simPot.SIZE_X; i++){
-            for(int j = 0; j < simPot.SIZE_Y; j++){
-                if(simPot.getPlateau()[i][j] instanceof CaseCultivable && ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() != null){
-                    if(((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Salade){
-                        if(humidité > 60 && ensoleillement > 0.6){
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 1;
-                        }else if(humidité < 0.1 && ensoleillement < 0.1){
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 0.2;
-                        }else{
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 0.5;
+        // Saison nouvelle ?
+        // Update si jour =! via la fonction dans Environnement updateTemps();
+        boolean jourNouveau;
+        if (changementSaison()) { // Si la saison change on met à jour l'environnement
+            setEnvironnementActuel();
+        }
+
+        jourNouveau = environnementActuel.updateTemps(); // Si je suis passé à un autre jour je modifie le temps actuel
+
+        if (jourNouveau) {
+            setHumiditeActuelle();
+            setEnsoleillementActuel();
+            setTemperatureActuelle();
+            for(int i = 0; i < simPot.SIZE_X; i++){
+                for(int j = 0; j < simPot.SIZE_Y; j++) {
+                    if (simPot.getPlateau()[i][j] instanceof CaseCultivable && ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() != null) {
+                        if (((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Salade) {
+                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().setTauxCroissance(humiditeActuelle, ensoleillementActuel, temperatureActuelle, saisonsActuelle);
                         }
-                    }else if(((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Carotte){
-                        if(humidité > 65 && ensoleillement > 0.5){
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 1;
-                        }else if(humidité < 0.2 && ensoleillement < 0.2){
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 0.2;
-                        }else{
-                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().tauxCroissance = 0.5;
+                        if (((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Carotte) {
+                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().setTauxCroissance(humiditeActuelle, ensoleillementActuel, temperatureActuelle, saisonsActuelle);
                         }
-                    }else{
-                        continue;
+                        if (((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Radis) {
+                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().setTauxCroissance(humiditeActuelle, ensoleillementActuel, temperatureActuelle, saisonsActuelle);
+                        }
+                        if (((CaseCultivable) simPot.getPlateau()[i][j]).getLegume() instanceof Tomate) {
+                            ((CaseCultivable) simPot.getPlateau()[i][j]).getLegume().setTauxCroissance(humiditeActuelle, ensoleillementActuel, temperatureActuelle, saisonsActuelle);
+                        }
                     }
-                }else{
-                    continue;
                 }
             }
         }
-
     }
 
-    public static void main(String[] args) {
-    }
 }
