@@ -72,4 +72,8 @@ public class Ordonnanceur extends Observable {
     public void setPeriode(int nouvellePeriode, IncrementerTempsModel incrementeur) {
         TempsModel.getTemps().setPeriode(nouvellePeriode, incrementeur);
     }
+
+    public SimulateurPotager getSimulateurPotager() {
+        return simulateurPotager;
+    }
 }
