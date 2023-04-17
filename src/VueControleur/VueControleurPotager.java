@@ -52,12 +52,18 @@ public class VueControleurPotager extends JFrame implements Observer {
     private ImageIcon icoOrange;
     private ImageIcon icoTomate;
     private ImageIcon icoRadis;
+    private ImageIcon icoRateau;
+    private ImageIcon icoPelle;
+    private ImageIcon icoPousse;
+    private ImageIcon icoHerbe;
     //endregion
 
     // Grille du potager
     private SimulateurPotager simulateurPotager; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
     private Legume legumeEnMain;
-    private CaseNonCultivable objetEnMain;
+
+    //Entier correspondant aux différents outils : Pelle = 0, Rateau = 1
+    private int objetEnMain;
 
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
@@ -97,12 +103,17 @@ public class VueControleurPotager extends JFrame implements Observer {
         icoSalade = chargerIcone("Images/data.png", 0, 0, ICONE_WIDTH, ICONE_HEIGHT);//chargerIcone("Images/Pacman.png");
         icoVide = chargerIcone("Images/Vide.png");
         icoMur = chargerIcone("Images/Mur.png");
-        icoTerre = chargerIcone("Images/Terre.png");
+        icoTerre = chargerIcone("Images/sol.png", 0, 0, 512, 512);
         icoCarotte = chargerIcone("Images/data.png", 1 * ICONE_ROW, 1 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoChampignon = chargerIcone("Images/data.png", 1 * ICONE_ROW, 0 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoOrange = chargerIcone("Images/data.png", 0 * ICONE_ROW, 2 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoTomate = chargerIcone("Images/data.png", 8 * ICONE_ROW, 3 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoRadis = chargerIcone("Images/data.png", 2 * ICONE_ROW, 2 * ICONE_ROW, ICONE_WIDTH, ICONE_HEIGHT);
+        icoRateau = chargerIcone("Images/rateau.png", 0, 0, 512, 512);
+        icoPelle = chargerIcone("Images/pelle.png", 0, 0, 512, 512);
+        icoPousse = chargerIcone("Images/pousse.png", 0, 0, 512, 512);
+        icoHerbe = chargerIcone("Images/herbe.png", 0 ,0, 512, 512);
+
     }
 
     // Procédure qui permet la construction de la fenêtre
@@ -175,25 +186,40 @@ public class VueControleurPotager extends JFrame implements Observer {
             }
         });
 
-        JButton bTerre = new JButton();
-        bTerre.setIcon(icoTerre);
-        bTerre.setContentAreaFilled(false);
-        bTerre.setBorderPainted(false);
-        bTerre.addMouseListener(new MouseAdapter() {
+//        JButton bTerre = new JButton();
+//        bTerre.setIcon(icoTerre);
+//        bTerre.setContentAreaFilled(false);
+//        bTerre.setBorderPainted(false);
+//        bTerre.addMouseListener(new MouseAdapter() {
+//            @Override
+//            public void mouseClicked(MouseEvent e) {
+//                legumeEnMain = null;
+//            }
+//        });
+
+        JButton bPelle = new JButton();
+        bPelle.setIcon(icoPelle);
+        bPelle.setContentAreaFilled(false);
+        bPelle.setBorderPainted(false);
+        bPelle.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                objetEnMain = 0;
                 legumeEnMain = null;
+                System.out.println("Pelle en main " + objetEnMain);
             }
         });
 
-        JButton rateau = new JButton();
-        rateau.setIcon(icoChampignon);
-        rateau.setContentAreaFilled(false);
-        rateau.setBorderPainted(false);
-        rateau.addMouseListener(new MouseAdapter() {
+        JButton bRateau = new JButton();
+        bRateau.setIcon(icoRateau);
+        bRateau.setContentAreaFilled(false);
+        bRateau.setBorderPainted(false);
+        bRateau.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                objetEnMain = 1;
                 legumeEnMain = null;
+                System.out.println("Rateau en main " + objetEnMain);
             }
         });
 
@@ -210,7 +236,9 @@ public class VueControleurPotager extends JFrame implements Observer {
         toolBar.add(bCarotte);
         toolBar.add(bTomate);
         toolBar.add(bRadis);
-        toolBar.add(bTerre);
+        //toolBar.add(bTerre);
+        toolBar.add(bPelle);
+        toolBar.add(bRateau);
 
         add(toolBar, BorderLayout.NORTH);
 
@@ -237,11 +265,21 @@ public class VueControleurPotager extends JFrame implements Observer {
                 tabJLabel[x][y].addMouseListener(new MouseAdapter() {
                     @Override
                     public void mouseClicked(MouseEvent e) {
-                        simulateurPotager.planterLegume(xx, yy, legumeEnMain);
-                        //infosLegumeHover(xx, yy, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
-                        if(((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume() != null){
+                        if(objetEnMain == 0 && legumeEnMain == null && ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume() != null){
                             simulateurPotager.recolterLegume(xx, yy, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
+                            //simulateurPotager.rendreIncultivable(xx, yy);
                         }
+                        if(objetEnMain == 1 && legumeEnMain == null){
+                            simulateurPotager.rendreCultivable(xx, yy);
+                        }
+                        if(((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).estCultivable){
+                            simulateurPotager.planterLegume(xx, yy, legumeEnMain);
+                        }else if(!((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).estCultivable){
+                            simulateurPotager.rendreIncultivable(xx, yy);
+                            System.out.println("Rendre la case cultivable à l'aide du rateau !!");
+                        }
+                        //infosLegumeHover(xx, yy, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
+
                     }
 
                 });
@@ -255,9 +293,9 @@ public class VueControleurPotager extends JFrame implements Observer {
         Point newLocation = new Point(middle.x - (infosCroissance.getWidth() / 2) + 220,
                 middle.y - (infosCroissance.getHeight() / 2) + 170);
         infosCroissance.setLocation(newLocation);
-        infosCroissance.setUndecorated(false);
+        infosCroissance.setUndecorated(true);
         infosCroissance.setVisible(true);
-        //infosCroissance.setBackground(new Color(0.5f, 0.5f, 0.5f, 0.5f));
+        infosCroissance.setBackground(new Color(0.5f, 0.5f, 0.5f, 0.5f));
         infosCroissance.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
         JPanel infos = new JPanel();
@@ -296,7 +334,10 @@ public class VueControleurPotager extends JFrame implements Observer {
                             case tomate: tabJLabel[x][y].setIcon(icoTomate); break;
                             case radis: tabJLabel[x][y].setIcon(icoRadis); break;
                         }
-                    } else {
+                    }else if(!((CaseCultivable) simulateurPotager.getPlateau()[x][y]).estCultivable){
+                        tabJLabel[x][y].setIcon(icoHerbe);
+                    }
+                    else if(((CaseCultivable) simulateurPotager.getPlateau()[x][y]).estCultivable){
                         tabJLabel[x][y].setIcon(icoTerre);
                     }
 

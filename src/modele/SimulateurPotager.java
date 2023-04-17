@@ -35,6 +35,8 @@ public class SimulateurPotager {
 
         simMet = new SimulateurMeteo(this);
 
+        inventaire = new Inventaire();
+
     }
 
 
@@ -96,13 +98,30 @@ public class SimulateurPotager {
 
     public void recolterLegume(int x, int y, Legume _legume){
         if(grilleCases[x][y] != null && grilleCases[x][y] instanceof CaseCultivable){
-            if(_legume instanceof Salade){
-                inventaire.nbSalades++;
-            }else if(_legume instanceof Tomate){
-                inventaire.nbTomates++;
-            }else if(_legume instanceof Carotte){
-                inventaire.nbCarotte++;
+
+            switch (_legume.getVariete()) {
+                case salade: inventaire.nbSalades++; break;
+                case carotte: inventaire.nbCarotte++; break;
+                case tomate: inventaire.nbTomates++; break;
+                case radis: inventaire.nbRadis++; break;
             }
+        }
+        System.out.println("NbSalades : " + inventaire.nbSalades);
+        System.out.println("NbTomates : " + inventaire.nbTomates);
+        System.out.println("NbCarottes : " + inventaire.nbCarotte);
+        System.out.println("NbRadis : " + inventaire.nbRadis);
+
+    }
+
+    public void rendreCultivable(int x, int y){
+        if(grilleCases[x][y] != null){
+            ((CaseCultivable) grilleCases[x][y]).estCultivable = true;
+        }
+    }
+
+    public void rendreIncultivable(int x, int y){
+        if(grilleCases[x][y] != null){
+            ((CaseCultivable) grilleCases[x][y]).estCultivable = false;
         }
     }
 

@@ -9,18 +9,22 @@ import modele.environnement.varietes.Varietes;
 public class CaseCultivable extends Case {
 
     private Legume legume;
+
+    public boolean estCultivable;
     public CaseCultivable(SimulateurPotager _simulateurPotager) {
         super(_simulateurPotager);
+        estCultivable = false;
     }
 
     @Override
     public void actionUtilisateur() {
-        if (legume == null) {
+        /*if (legume == null) {
             legume = new Carotte();
             System.out.println(legume.getVariete());
         } else {
             legume = null;
-        }
+        }*/
+        estCultivable = false;
     }
 
     public void planterLegume(Legume _legume){
@@ -39,6 +43,10 @@ public class CaseCultivable extends Case {
 
     public Legume getLegume() {
         return legume;
+    }
+
+    public Legume getLegumeFromCase(int x, int y){
+        return (((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume());
     }
 
     public void setLegume(Legume _legume){
