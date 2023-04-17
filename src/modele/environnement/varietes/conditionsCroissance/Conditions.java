@@ -24,9 +24,9 @@ public abstract class Conditions {
         double tauxCroissance = 1.0;
         double ecartSaison;
         if (saisonIdeal != saisonActuelle) {
-            ecartSaison = 0.60;
+            ecartSaison = 0.40;
         } else {
-            ecartSaison = 1.0;
+            ecartSaison = 0.0;
         }
         // Plus 5% de marge d'erreur
         if ((humiditeActuelle >= humiditeIdeale && humiditeActuelle < humiditeIdeale * 1.05) &&
@@ -35,7 +35,6 @@ public abstract class Conditions {
             saisonActuelle == saisonIdeal) {
             tauxCroissance = 1.0;
         } else {
-            // Calcul du taux de croissance proportionnellement aux écarts par rapport aux valeurs idéales
             double ecartHumidite = Math.abs(humiditeActuelle - humiditeIdeale) / 100.0;
             double ecartEnsoleillement = Math.abs(ensoleillementActuel - ensoleillementIdeale);
             double ecartTemperature = Math.abs(temperatureActuelle - temperatureIdeal) / 50.0;

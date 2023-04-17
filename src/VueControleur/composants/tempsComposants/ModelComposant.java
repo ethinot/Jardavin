@@ -17,12 +17,14 @@ abstract public class ModelComposant implements Observer {
 
     public ModelComposant(String titreComposant) {
         Ordonnanceur.getOrdonnanceur().addObserver(this);
-        uniteTempsConteneur = new JPanel(new FlowLayout( FlowLayout.CENTER, 10 ,10));
+        uniteTempsConteneur = new JPanel(new FlowLayout( FlowLayout.CENTER, 10 ,0));
         setUniteTempsLabel();
         setAccelerateur();
         uniteTempsLabel.setFont(Police.getValeurPolice());
         uniteTempsConteneur.add(uniteTempsLabel);
-        uniteTempsConteneur.add(accelerateur);
+        if (!(this instanceof Annee)) {
+            uniteTempsConteneur.add(accelerateur);
+        }
         Border bordureTitre = BorderFactory.createTitledBorder(titreComposant);
         uniteTempsConteneur.setBorder(bordureTitre);
     }

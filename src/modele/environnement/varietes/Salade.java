@@ -43,7 +43,7 @@ public class Salade extends Legume {
         System.out.println("Nombre d'heures écoulées : " + nbHeuresEcoulees);
         System.out.println("Salade mûre à " + df.format(croissanceEnCours) + " %");
         System.out.println("temps de croissance en heures : " + tempsDeCroissanceEnHeures);;
-        System.out.println("Taux de croissance" + df.format(tauxCroissance) + " %");
+        System.out.println("Taux de croissance " + df.format(tauxCroissance) + " %");
         System.out.println("---------------------------------------------------------");
     }
 }
