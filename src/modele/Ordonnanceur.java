@@ -55,6 +55,10 @@ public class Ordonnanceur extends Observable {
         frequenceMAJ.scheduleAtFixedRate(updateTask, 0, 1000 / 30);
     }
 
+    public void setSimulateurPotager(SimulateurPotager simuPotage) {
+        simulateurPotager = simuPotage;
+    }
+
     public void stop() {
         if (frequenceMAJ != null) {
             frequenceMAJ.cancel();
