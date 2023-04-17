@@ -6,13 +6,11 @@ import modele.temps.composants.IncrementerMinute;
 import modele.temps.composants.IncrementerSeconde;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
-import java.awt.event.*;
 
-public class HeureMinuteSeconde extends modelComposant implements ActionListener{
+public class HeureMinuteSeconde extends ModelComposant implements ActionListener{
 
     // 4 états différents pour l'acceleration (aucune, seconde, minute, heure)
     public HeureMinuteSeconde() {
