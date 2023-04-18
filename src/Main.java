@@ -21,7 +21,6 @@ public class Main {
         // Style pour les différents components
         UIManager.setLookAndFeel(new NimbusLookAndFeel());
         SimulateurPotager simulateurPotager = new SimulateurPotager();
-        Inventaire inventaire = simulateurPotager.getInventaire();
         VueControleurPotager vc = new VueControleurPotager(simulateurPotager);
         vc.setVisible(true);
         Ordonnanceur.getOrdonnanceur().setSimulateurPotager(simulateurPotager);

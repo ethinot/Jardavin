@@ -1,6 +1,5 @@
 package modele;
 
-import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.varietes.Carotte;
 import modele.environnement.varietes.Radis;
@@ -8,6 +7,11 @@ import modele.environnement.varietes.Salade;
 import modele.environnement.varietes.Tomate;
 import modele.saison.*;
 import modele.temps.TempsModel;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
+
+import static java.lang.Double.parseDouble;
+import static java.lang.Float.parseFloat;
 
 public class SimulateurMeteo implements Runnable {
     private SimulateurPotager simPot;
@@ -20,9 +24,12 @@ public class SimulateurMeteo implements Runnable {
     protected int humiditeActuelle;
     protected float ensoleillementActuel;
     protected float temperatureActuelle;
+    private static final DecimalFormat df = new DecimalFormat();
 
     public SimulateurMeteo(SimulateurPotager _simPot) {
         Ordonnanceur.getOrdonnanceur().add(this);
+        df.setRoundingMode(RoundingMode.UP);
+        df.setMaximumFractionDigits(2);
         simPot = _simPot;
         setSaisonsActuelle();
         setEnvironnementActuel();
@@ -84,8 +91,14 @@ public class SimulateurMeteo implements Runnable {
     public int getHumiditeActuelle() {
         return humiditeActuelle;
     }
-    public float getEnsoleillementActuel() { return ensoleillementActuel; }
-    public float getTemperatureActuelle() { return temperatureActuelle; }
+    public String getEnsoleillementActuel() {
+        String soleil = df.format(ensoleillementActuel * 100);
+        return soleil + " %";
+    }
+    public String getTemperatureActuelle() {
+        String tempera = df.format(temperatureActuelle);
+        return tempera + " C°";
+    }
     public String getSaisonActuelle() { return saisonsActuelle.toString();}
 
     @Override

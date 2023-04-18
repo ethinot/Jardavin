@@ -20,7 +20,7 @@ public class Temperature extends PatternComposant{
 
     @Override
     public void update(Observable o, Object arg) {
-        valeurJLabel = String.valueOf(Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getSimMet().getTemperatureActuelle());
+        valeurJLabel = Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getSimMet().getTemperatureActuelle();
         setEnvironnementValeur();
     }
 }

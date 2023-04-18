@@ -2,11 +2,15 @@ package VueControleur.composants.meteoComposants;
 
 import modele.Ordonnanceur;
 
+import java.awt.*;
 import java.util.Observable;
+
+import static java.lang.String.valueOf;
 
 public class Ensoleillement extends PatternComposant{
     public Ensoleillement() {
         super("Ensoleillement");
+        this.meteoComposantConteneur.setPreferredSize(new Dimension(130,62));
     }
     @Override
     void setEnvironnementValeur() {
@@ -20,7 +24,7 @@ public class Ensoleillement extends PatternComposant{
 
     @Override
     public void update(Observable o, Object arg) {
-        valeurJLabel = String.valueOf(Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getSimMet().getEnsoleillementActuel());
+        valeurJLabel = Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getSimMet().getEnsoleillementActuel();
         setEnvironnementValeur();
     }
 }
