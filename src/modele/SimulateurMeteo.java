@@ -71,25 +71,25 @@ public class SimulateurMeteo implements Runnable {
     public void setSaisonsActuelle() {
         saisonsActuelle = getSaison(TempsModel.getTemps().getTempsModel().getMonthValue());
     }
-
     public void setHumiditeActuelle() {
         this.humiditeActuelle = environnementActuel.getHumidite();
     }
-
     public void setEnsoleillementActuel() {
         this.ensoleillementActuel = environnementActuel.getEnsoleillement();
     }
-
     public void setTemperatureActuelle() {
         this.temperatureActuelle = environnementActuel.getTemperature();
     }
 
-    // TODO: set Les Autres actuelle
+    public int getHumiditeActuelle() {
+        return humiditeActuelle;
+    }
+    public float getEnsoleillementActuel() { return ensoleillementActuel; }
+    public float getTemperatureActuelle() { return temperatureActuelle; }
+    public String getSaisonActuelle() { return saisonsActuelle.toString();}
 
     @Override
     public void run() {
-        // Saison nouvelle ?
-        // Update si jour =! via la fonction dans Environnement updateTemps();
         boolean jourNouveau;
         if (changementSaison()) { // Si la saison change on met à jour l'environnement
             setEnvironnementActuel();

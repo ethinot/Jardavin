@@ -1,5 +1,6 @@
 package VueControleur;
 
+import VueControleur.composants.MeteoVue;
 import VueControleur.Style.Police;
 import VueControleur.composants.IconesVue;
 import VueControleur.composants.InventaireVue;
@@ -69,6 +70,8 @@ public class VueControleurPotager extends JFrame implements Observer {
     private InventaireVue inventaireVue;
     private IconesVue iconesVue;
 
+    private MeteoVue meteoVue;
+
     private JFrame infosCroissance = new JFrame();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     Point middle = new Point(screenSize.width / 2, screenSize.height / 2);
@@ -81,6 +84,8 @@ public class VueControleurPotager extends JFrame implements Observer {
         inventaireVue = new InventaireVue();
         iconesVue = new IconesVue();
         iconesVue.chargerLesIcones();
+        meteoVue = new MeteoVue();
+        //chargerLesIcones();
         placerLesComposantsGraphiques();
     }
 /*
@@ -103,8 +108,8 @@ public class VueControleurPotager extends JFrame implements Observer {
     	// image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons
 
         icoSalade = chargerIcone("Images/data.png", 0, 0, ICONE_WIDTH, ICONE_HEIGHT);//chargerIcone("Images/Pacman.png");
-        icoVide = chargerIcone("Images/Vide.png");
-        icoMur = chargerIcone("Images/Mur.png");
+        icoVide = chargerIcone("Images/Vide.png", 0, 0, 18, 19);
+        icoMur = chargerIcone("Images/Mur.png", 0, 0, 18, 19);
         icoTerre = chargerIcone("Images/sol.png", 0, 0, 512, 512);
         icoCarotte = chargerIcone("Images/data.png", 1 * ICONE_ROW, 1 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoChampignon = chargerIcone("Images/data.png", 1 * ICONE_ROW, 0 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
@@ -132,9 +137,13 @@ public class VueControleurPotager extends JFrame implements Observer {
         // permet de center la fenêtre au lieu d'en haut à gauche
         setLocationRelativeTo(null);
 
-        // Barre affichage de temps
+        // Barre affichage de temps à l'EST
         add(tempsVue.getTempsVueConteneur(), BorderLayout.EAST);
         add(inventaireVue.getInventaireVueConteneur(), BorderLayout.WEST);
+
+        // Barre des températures au SUD
+        add(meteoVue.getMeteoVueContainer(), BorderLayout.SOUTH);
+
 
         // Slide Bar pour accélération du temps
         //add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
@@ -365,4 +374,3 @@ public class VueControleurPotager extends JFrame implements Observer {
     }
 
 }
-  

@@ -39,8 +39,10 @@ public class SimulateurPotager {
 
     }
 
+    public SimulateurMeteo getSimMet() {
+        return simMet;
+    }
 
-    
     public Case[][] getPlateau() {
         return grilleCases;
     }
@@ -59,8 +61,7 @@ public class SimulateurPotager {
             addEntite(new CaseNonCultivable(this), 19, y);
         }
 
-        addEntite(new CaseNonCultivable(this), 2, 6);
-        addEntite(new CaseNonCultivable(this), 3, 6);
+
 
         Random rnd = new Random();
 

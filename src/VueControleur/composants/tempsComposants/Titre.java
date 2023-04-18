@@ -11,7 +11,7 @@ import java.awt.event.ActionListener;
 public class Titre implements ActionListener {
     private JPanel titleConteneur = new JPanel();
     private JLabel title = new JLabel();
-    private JButton stopButton = new JButton("Stop");
+    private JButton stopButton = new JButton("STOP");
 
     public Titre() {
         titleConteneur.setLayout(new BoxLayout(titleConteneur, BoxLayout.Y_AXIS));

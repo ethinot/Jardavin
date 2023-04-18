@@ -1,18 +1,15 @@
 package VueControleur.composants.tempsComposants;
 
 import modele.temps.TempsModel;
-import modele.temps.composants.IncrementerHeure;
-import modele.temps.composants.IncrementerMinute;
 import modele.temps.composants.IncrementerMois;
 import modele.temps.composants.IncrementerSeconde;
 
 import javax.swing.*;
-import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Observable;
 
-public class Mois extends modelComposant implements ActionListener {
+public class Mois extends ModelComposant implements ActionListener {
 
     public Mois() {
         super("Mois");
