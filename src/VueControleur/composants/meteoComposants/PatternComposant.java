@@ -18,12 +18,14 @@ abstract public class PatternComposant implements Observer {
         Ordonnanceur.getOrdonnanceur().addObserver(this);
         meteoComposantConteneur = new JPanel(new FlowLayout( FlowLayout.CENTER, 10, 0));
         environnementValeur.setFont(Police.getValeurPolice());
+        valeurJLabel = "printemps"; // Saison par défaut pour l'affichage
         setEnvironnementValeur();
         setEnvironnementIcon();
         Border bordureTitre = BorderFactory.createTitledBorder(titreComposant);
         meteoComposantConteneur.setBorder(bordureTitre);
-        meteoComposantConteneur.add(environnementValeur);
         meteoComposantConteneur.add(environnementIcon);
+        meteoComposantConteneur.add(environnementValeur);
+
     }
 
     public JPanel getMeteoComposantConteneur() { return meteoComposantConteneur;}

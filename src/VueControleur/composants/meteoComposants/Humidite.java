@@ -1,8 +1,10 @@
 package VueControleur.composants.meteoComposants;
 
+import VueControleur.composants.IconesVue;
 import modele.Ordonnanceur;
 
 import javax.swing.*;
+import java.awt.*;
 import java.util.Observable;
 
 public class Humidite extends PatternComposant {
@@ -17,7 +19,7 @@ public class Humidite extends PatternComposant {
 
     @Override
     void setEnvironnementIcon() {
-        //TODO: Set les icons
+        this.environnementIcon.setIcon(IconesVue.getIconesVue().getIcoHumidite());
     }
 
     @Override

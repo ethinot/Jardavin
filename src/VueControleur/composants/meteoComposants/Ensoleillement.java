@@ -1,5 +1,6 @@
 package VueControleur.composants.meteoComposants;
 
+import VueControleur.composants.IconesVue;
 import modele.Ordonnanceur;
 
 import java.awt.*;
@@ -19,7 +20,7 @@ public class Ensoleillement extends PatternComposant{
 
     @Override
     void setEnvironnementIcon() {
-        //TODO: Set les icons
+        environnementIcon.setIcon(IconesVue.getIconesVue().getIcoTemps());
     }
 
     @Override

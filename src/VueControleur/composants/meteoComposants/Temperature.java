@@ -1,5 +1,6 @@
 package VueControleur.composants.meteoComposants;
 
+import VueControleur.composants.IconesVue;
 import modele.Ordonnanceur;
 
 import java.util.Observable;
@@ -15,7 +16,7 @@ public class Temperature extends PatternComposant{
 
     @Override
     void setEnvironnementIcon() {
-        //TODO: Set les icons
+        environnementIcon.setIcon(IconesVue.getIconesVue().getIcoTemps());
     }
 
     @Override

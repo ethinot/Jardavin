@@ -7,17 +7,27 @@ import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Field;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class IconesVue {
 
+
+public class IconesVue {
+    // Design pattern singleton pour charger les icons qu'une seule fois
     private static IconesVue iconesVue;
 
-    public IconesVue getIconesVue(){
+    public static IconesVue getIconesVue(){
         if(iconesVue == null){
             iconesVue = new IconesVue();
+            iconesVue.chargerLesIcones();
         }
+        return iconesVue;
+    }
+
+    public IconesVue getIconVue() {
         return iconesVue;
     }
 
@@ -42,6 +52,13 @@ public class IconesVue {
     private ImageIcon icoPousse;
     private ImageIcon icoHerbe;
     private ImageIcon icoSacADos;
+    private ImageIcon icoPrintemps;
+    private ImageIcon icoEte;
+    private ImageIcon icoAutomne;
+    private ImageIcon icoHiver;
+    private ImageIcon icoHumidite;
+    private ImageIcon icoTemperature;
+    private ImageIcon icoTemps;
 
     public void chargerLesIcones() {
 
@@ -60,7 +77,13 @@ public class IconesVue {
         icoPousse = chargerIcone("Images/pousse.png", 0, 0, 512, 512);
         icoHerbe = chargerIcone("Images/herbe.png", 0 ,0, 512, 512);
         icoSacADos = chargerIcone("Images/sac-a-dos.png", 0, 0, 512, 512);
-
+        icoPrintemps = chargerIcone("Images/spring.png", 0, 0, 512, 512);
+        icoEte = chargerIcone("Images/summer.png", 0, 0, 512, 512);
+        icoAutomne = chargerIcone("Images/fall.png", 0, 0, 512, 512);
+        icoHiver = chargerIcone("Images/winter.png", 0, 0, 512, 512);
+        icoHumidite = chargerIcone("Images/goutte-eau.png", 0, 0, 512, 512);
+        icoTemperature = chargerIcone("Images/thermometre.png", 0, 0, 512, 512);
+        icoTemps = chargerIcone("Images/soleil.png", 0, 0, 512, 512);
     }
 
     // chargement d'une sous partie de l'image
@@ -113,6 +136,12 @@ public class IconesVue {
     public ImageIcon getIcoPelle(){return icoPelle; }
     public ImageIcon getIcoPousse(){return icoPousse; }
     public ImageIcon getIcoHerbe(){return icoHerbe; }
-    public ImageIcon getIcoSacADos(){return icoSacADos; }
+    public ImageIcon getIcoPrintemps(){return icoPrintemps; }
+    public ImageIcon getIcoEte(){return icoEte; }
+    public ImageIcon getIcoAutomne(){return icoAutomne; }
+    public ImageIcon getIcoHiver(){return icoHiver; }
+    public ImageIcon getIcoHumidite(){return icoHumidite; }
+    public ImageIcon getIcoTemperature(){return icoTemperature; }
+    public ImageIcon getIcoTemps(){return icoTemps; }
 }
 

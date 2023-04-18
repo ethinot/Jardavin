@@ -48,7 +48,7 @@ public class InventaireVue implements Observer {
 
         labelSacADos.setText("Inventaire");
         labelSacADos.setFont(Police.getTitrePolice());
-        labelSacADos.setIcon(iconesVue.getIcoSacADos());
+        labelSacADos.setIcon(IconesVue.getIconesVue().getIcoPousse());
 
         inventairePanel.setBorder(raisedbevel);
         GridLayout inventaireLayout = new GridLayout(0, 1, 0, 10);
