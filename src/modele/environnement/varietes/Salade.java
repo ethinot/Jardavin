@@ -1,12 +1,6 @@
 package modele.environnement.varietes;
-import VueControleur.composants.IconesVue;
-import modele.environnement.varietes.conditionsCroissance.CarotteCondition;
+import VueControleur.IconesVue;
 import modele.environnement.varietes.conditionsCroissance.SaladeCondition;
-import modele.temps.TempsModel;
-import modele.temps.composants.IncrementerJour;
-
-import java.text.DecimalFormat;
-import java.time.LocalDateTime;
 
 public class Salade extends Legume {
 

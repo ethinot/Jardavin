@@ -1,30 +1,20 @@
 package VueControleur;
 
 import VueControleur.composants.MeteoVue;
-import VueControleur.Style.Police;
-import VueControleur.composants.IconesVue;
 import VueControleur.composants.InventaireVue;
 import VueControleur.composants.TempsVue;
 import modele.SimulateurPotager;
-import modele.environnement.Case;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
 import modele.environnement.varietes.*;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowEvent;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.util.Observable;
 import java.util.Observer;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 
 /** Cette classe a deux fonctions :

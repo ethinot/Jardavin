@@ -1,15 +1,10 @@
-package VueControleur.composants;
-
-import VueControleur.VueControleurPotager;
+package VueControleur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -59,6 +54,7 @@ public class IconesVue {
     private ImageIcon icoHumidite;
     private ImageIcon icoTemperature;
     private ImageIcon icoTemps;
+    private ImageIcon icoHorloge;
 
     public void chargerLesIcones() {
 
@@ -84,6 +80,7 @@ public class IconesVue {
         icoHumidite = chargerIcone("Images/goutte-eau.png", 0, 0, 512, 512);
         icoTemperature = chargerIcone("Images/thermometre.png", 0, 0, 512, 512);
         icoTemps = chargerIcone("Images/soleil.png", 0, 0, 512, 512);
+        icoHorloge = chargerIcone("Images/horloge.png", 0, 0, 512, 512);
     }
 
     // chargement d'une sous partie de l'image
@@ -143,5 +140,7 @@ public class IconesVue {
     public ImageIcon getIcoHumidite(){return icoHumidite; }
     public ImageIcon getIcoTemperature(){return icoTemperature; }
     public ImageIcon getIcoTemps(){return icoTemps; }
+    public ImageIcon getIcoSacADos(){return icoSacADos; }
+    public ImageIcon getIcoHorloge(){return icoHorloge; }
 }
 

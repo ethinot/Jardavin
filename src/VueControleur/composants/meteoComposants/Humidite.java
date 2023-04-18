@@ -1,10 +1,8 @@
 package VueControleur.composants.meteoComposants;
 
-import VueControleur.composants.IconesVue;
+import VueControleur.IconesVue;
 import modele.Ordonnanceur;
 
-import javax.swing.*;
-import java.awt.*;
 import java.util.Observable;
 
 public class Humidite extends PatternComposant {

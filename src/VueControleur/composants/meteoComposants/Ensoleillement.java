@@ -1,9 +1,8 @@
 package VueControleur.composants.meteoComposants;
 
-import VueControleur.composants.IconesVue;
+import VueControleur.IconesVue;
 import modele.Ordonnanceur;
 
-import java.awt.*;
 import java.util.Observable;
 
 import static java.lang.String.valueOf;
