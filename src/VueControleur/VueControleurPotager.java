@@ -1,5 +1,8 @@
 package VueControleur;
 
+import VueControleur.Style.Police;
+import VueControleur.composants.IconesVue;
+import VueControleur.composants.InventaireVue;
 import VueControleur.composants.TempsVue;
 import modele.SimulateurPotager;
 import modele.environnement.Case;
@@ -29,12 +32,6 @@ import java.util.logging.Logger;
  */
 public class VueControleurPotager extends JFrame implements Observer {
 
-    //region Constantes
-    static final int ICONE_HEIGHT = 150;
-    static final int ICONE_WIDTH = 150;
-    static final int ICONE_COLUMN = 390;
-    static final int ICONE_ROW = 390;
-    //endregion
 
     //region Tailles grille
     private final int sizeX; // taille de la grille affichée
@@ -56,6 +53,7 @@ public class VueControleurPotager extends JFrame implements Observer {
     private ImageIcon icoPelle;
     private ImageIcon icoPousse;
     private ImageIcon icoHerbe;
+    private ImageIcon icoSacADos;
     //endregion
 
     // Grille du potager
@@ -68,6 +66,8 @@ public class VueControleurPotager extends JFrame implements Observer {
     private JLabel[][] tabJLabel; // cases graphique (au moment du rafraichissement, chaque case va être associée à une icône, suivant ce qui est présent dans le modèle)
 
     private TempsVue tempsVue;
+    private InventaireVue inventaireVue;
+    private IconesVue iconesVue;
 
     private JFrame infosCroissance = new JFrame();
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -78,7 +78,9 @@ public class VueControleurPotager extends JFrame implements Observer {
         sizeY = _simulateurPotager.SIZE_Y;
         simulateurPotager = _simulateurPotager;
         tempsVue = new TempsVue();
-        chargerLesIcones();
+        inventaireVue = new InventaireVue();
+        iconesVue = new IconesVue();
+        iconesVue.chargerLesIcones();
         placerLesComposantsGraphiques();
     }
 /*
@@ -97,7 +99,7 @@ public class VueControleurPotager extends JFrame implements Observer {
     }
 */
 
-    private void chargerLesIcones() {
+    /*private void chargerLesIcones() {
     	// image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons
 
         icoSalade = chargerIcone("Images/data.png", 0, 0, ICONE_WIDTH, ICONE_HEIGHT);//chargerIcone("Images/Pacman.png");
@@ -113,15 +115,16 @@ public class VueControleurPotager extends JFrame implements Observer {
         icoPelle = chargerIcone("Images/pelle.png", 0, 0, 512, 512);
         icoPousse = chargerIcone("Images/pousse.png", 0, 0, 512, 512);
         icoHerbe = chargerIcone("Images/herbe.png", 0 ,0, 512, 512);
+        icoSacADos = chargerIcone("Images/sac-a-dos.png", 0, 0, 512, 512);
 
-    }
+    }*/
 
     // Procédure qui permet la construction de la fenêtre
     private void placerLesComposantsGraphiques() {
         setTitle("A vegetable garden");
         // on peut aussi lui passer un objet Dimension
         // on taille avant de setLocation pour éviter tous problèmes
-        setSize(700, 500);
+        setSize(700 , 500);
         // par défaut HID_ON_CLOSE
         // ici si on avait deux JFRAM cela fermerait les deux si on en ferme q'une
         // donc c'est mieux d'utiliser DISPOSE_ON_CLOSE
@@ -131,13 +134,14 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         // Barre affichage de temps
         add(tempsVue.getTempsVueConteneur(), BorderLayout.EAST);
+        add(inventaireVue.getInventaireVueConteneur(), BorderLayout.WEST);
 
         // Slide Bar pour accélération du temps
         //add(accelerateur.getAccelerateurConteneur(), BorderLayout.SOUTH);
         JButton bSalade = new JButton();
-        bSalade.setIcon(icoSalade);
+        bSalade.setIcon(iconesVue.getIcoSalade());
         bSalade.setMargin(new Insets(0, 0, 0, 0));
-        bSalade.setContentAreaFilled(false);
+        bSalade.setContentAreaFilled(true);
 
         bSalade.addMouseListener(new MouseAdapter() {
             @Override
@@ -146,15 +150,15 @@ public class VueControleurPotager extends JFrame implements Observer {
                 legumeEnMain = new Salade();
                 //Change le curseur en salade
 //                setCursor(Toolkit.getDefaultToolkit().createCustomCursor(
-//                        icoSalade.getImage(),
+//                        iconesVue.getIcoSalade.getImage(),
 //                        new Point(0,0),"custom cursor"));
             }
         });
         JButton bCarotte = new JButton();
         bCarotte.setFocusPainted(false);
         bCarotte.setMargin(new Insets(0, 0, 0, 0));
-        bCarotte.setContentAreaFilled(false);
-        bCarotte.setIcon(icoCarotte);
+        bCarotte.setContentAreaFilled(true);
+        bCarotte.setIcon(iconesVue.getIcoCarotte());
         bCarotte.setBorderPainted(false);
         bCarotte.addMouseListener(new MouseAdapter() {
             @Override
@@ -165,8 +169,8 @@ public class VueControleurPotager extends JFrame implements Observer {
         });
 
         JButton bTomate = new JButton();
-        bTomate.setIcon(icoTomate);
-        bTomate.setContentAreaFilled(false);
+        bTomate.setIcon(iconesVue.getIcoTomate());
+        bTomate.setContentAreaFilled(true);
         bTomate.setBorderPainted(false);
         bTomate.addMouseListener(new MouseAdapter() {
             @Override
@@ -176,8 +180,8 @@ public class VueControleurPotager extends JFrame implements Observer {
         });
 
         JButton bRadis = new JButton();
-        bRadis.setIcon(icoRadis);
-        bRadis.setContentAreaFilled(false);
+        bRadis.setIcon(iconesVue.getIcoRadis());
+        bRadis.setContentAreaFilled(true);
         bRadis.setBorderPainted(false);
         bRadis.addMouseListener(new MouseAdapter() {
             @Override
@@ -186,20 +190,9 @@ public class VueControleurPotager extends JFrame implements Observer {
             }
         });
 
-//        JButton bTerre = new JButton();
-//        bTerre.setIcon(icoTerre);
-//        bTerre.setContentAreaFilled(false);
-//        bTerre.setBorderPainted(false);
-//        bTerre.addMouseListener(new MouseAdapter() {
-//            @Override
-//            public void mouseClicked(MouseEvent e) {
-//                legumeEnMain = null;
-//            }
-//        });
-
         JButton bPelle = new JButton();
-        bPelle.setIcon(icoPelle);
-        bPelle.setContentAreaFilled(false);
+        bPelle.setIcon(iconesVue.getIcoPelle());
+        bPelle.setContentAreaFilled(true);
         bPelle.setBorderPainted(false);
         bPelle.addMouseListener(new MouseAdapter() {
             @Override
@@ -211,8 +204,8 @@ public class VueControleurPotager extends JFrame implements Observer {
         });
 
         JButton bRateau = new JButton();
-        bRateau.setIcon(icoRateau);
-        bRateau.setContentAreaFilled(false);
+        bRateau.setIcon(iconesVue.getIcoRateau());
+        bRateau.setContentAreaFilled(true);
         bRateau.setBorderPainted(false);
         bRateau.addMouseListener(new MouseAdapter() {
             @Override
@@ -275,13 +268,16 @@ public class VueControleurPotager extends JFrame implements Observer {
                         if(((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).estCultivable){
                             simulateurPotager.planterLegume(xx, yy, legumeEnMain);
                         }else if(!((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).estCultivable){
-                            simulateurPotager.rendreIncultivable(xx, yy);
+                            //simulateurPotager.rendreIncultivable(xx, yy);
                             System.out.println("Rendre la case cultivable à l'aide du rateau !!");
                         }
-                        //infosLegumeHover(xx, yy, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
 
                     }
 
+                    @Override
+                    public void mouseEntered(MouseEvent e) {
+                        //infosLegumeHover(xx, yy, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[xx][yy]).getLegume());
+                    }
                 });
             }
         }
@@ -314,7 +310,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         infosCroissance.add(infos, BorderLayout.CENTER);
     }
 
-    
+
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabJLabel)
      */
@@ -329,26 +325,26 @@ public class VueControleurPotager extends JFrame implements Observer {
                     if (legume != null) {
 
                         switch (legume.getVariete()) {
-                            case salade: tabJLabel[x][y].setIcon(icoSalade); break;
-                            case carotte: tabJLabel[x][y].setIcon(icoCarotte); break;
-                            case tomate: tabJLabel[x][y].setIcon(icoTomate); break;
-                            case radis: tabJLabel[x][y].setIcon(icoRadis); break;
+                            case salade: tabJLabel[x][y].setIcon(iconesVue.getIcoSalade()); break;
+                            case carotte: tabJLabel[x][y].setIcon(iconesVue.getIcoCarotte()); break;
+                            case tomate: tabJLabel[x][y].setIcon(iconesVue.getIcoTomate()); break;
+                            case radis: tabJLabel[x][y].setIcon(iconesVue.getIcoRadis()); break;
                         }
                     }else if(!((CaseCultivable) simulateurPotager.getPlateau()[x][y]).estCultivable){
-                        tabJLabel[x][y].setIcon(icoHerbe);
+                        tabJLabel[x][y].setIcon(iconesVue.getIcoHerbe());
                     }
                     else if(((CaseCultivable) simulateurPotager.getPlateau()[x][y]).estCultivable){
-                        tabJLabel[x][y].setIcon(icoTerre);
+                        tabJLabel[x][y].setIcon(iconesVue.getIcoTerre());
                     }
 
                     // si transparence : images avec canal alpha + dessins manuels (voir ci-dessous + créer composant qui redéfinie paint(Graphics g)), se documenter
                     //BufferedImage bi = getImage("Images/smick.png", 0, 0, 20, 20);
                     //tabJLabel[x][y].getGraphics().drawImage(bi, 0, 0, null);
                 } else if (simulateurPotager.getPlateau()[x][y] instanceof CaseNonCultivable) {
-                    tabJLabel[x][y].setIcon(icoMur);
+                    tabJLabel[x][y].setIcon(iconesVue.getIcoMur());
                 } else {
 
-                    tabJLabel[x][y].setIcon(icoVide);
+                    tabJLabel[x][y].setIcon(iconesVue.getIcoVide());
                 }
             }
         }
@@ -368,42 +364,5 @@ public class VueControleurPotager extends JFrame implements Observer {
 
     }
 
-
-    // chargement de l'image entière comme icone
-    private ImageIcon chargerIcone(String urlIcone) {
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(new File(urlIcone));
-        } catch (IOException ex) {
-            Logger.getLogger(VueControleurPotager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-
-
-        return new ImageIcon(image);
-    }
-
-    // chargement d'une sous partie de l'image
-    private ImageIcon chargerIcone(String urlIcone, int x, int y, int w, int h) {
-        // charger une sous partie de l'image à partir de ses coordonnées dans urlIcone
-        BufferedImage bi = getSubImage(urlIcone, x, y, w, h);
-        // adapter la taille de l'image a la taille du composant (ici : 20x20)
-        return new ImageIcon(bi.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
-    }
-
-    private BufferedImage getSubImage(String urlIcone, int x, int y, int w, int h) {
-        BufferedImage image = null;
-
-        try {
-            File f = new File(urlIcone);
-            image = ImageIO.read(new File(urlIcone));
-        } catch (IOException ex) {
-            Logger.getLogger(VueControleurPotager.class.getName()).log(Level.SEVERE, null, ex);
-            return null;
-        }
-        BufferedImage bi = image.getSubimage(x, y, w, h);
-        return bi;
-    }
-
 }
+  

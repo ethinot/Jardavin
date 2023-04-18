@@ -14,4 +14,30 @@ public class Inventaire {
         nbRadis = 0;
         nbCarotte = 0;
     }
+
+    public int getNbSalades(){
+        return nbSalades;
+    }
+    public int getNbCarotte(){
+        return nbCarotte;
+    }
+    public int getNbTomates(){
+        return nbTomates;
+    }
+    public int getNbRadis(){
+        return nbRadis;
+    }
+
+    public void setNbSalades(int nb){
+        nbSalades = nb;
+    }
+    public void setNbCarotte(int nb){
+        nbCarotte = nb;
+    }
+    public void setNbTomates(int nb){
+        nbTomates = nb;
+    }
+    public void setNbRadis(int nb){
+        nbRadis = nb;
+    }
 }

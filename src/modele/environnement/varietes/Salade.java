@@ -1,4 +1,5 @@
 package modele.environnement.varietes;
+import VueControleur.composants.IconesVue;
 import modele.environnement.varietes.conditionsCroissance.CarotteCondition;
 import modele.environnement.varietes.conditionsCroissance.SaladeCondition;
 import modele.temps.TempsModel;
@@ -8,8 +9,8 @@ import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 public class Salade extends Legume {
-    //Valeur affectant la croissance selon la météo favorable ou non
 
+    IconesVue iconesVue;
     public Salade(){
         conditionsFavorable = new SaladeCondition();
         System.out.println("Vous avez planté votre salade le " + jourDePlantage + " de ce mois");
@@ -19,7 +20,7 @@ public class Salade extends Legume {
             System.out.println("Vous devrez la récolter le " + jourDeRecolte + " de ce mois");
         }
         tempsDeCroissance = 21;
-        tempsDeCroissanceEnHeures = tempsDeCroissance * 60;
+        tempsDeCroissanceEnHeures = tempsDeCroissance * 24;
         tempsDePlantage = temps.getTempsModel();
     }
 

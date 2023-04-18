@@ -59,6 +59,9 @@ public class Ordonnanceur extends Observable {
         simulateurPotager = simuPotage;
     }
 
+    public void setInventaire(Inventaire in){
+        simulateurPotager.inventaire = in;
+    }
     public void stop() {
         if (frequenceMAJ != null) {
             frequenceMAJ.cancel();

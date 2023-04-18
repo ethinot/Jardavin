@@ -27,7 +27,7 @@ public class SimulateurPotager {
     // private HashMap<Case, Point> map = new  HashMap<Case, Point>(); // permet de récupérer la position d'une entité à partir de sa référence
     private Case[][] grilleCases = new Case[SIZE_X][SIZE_Y]; // permet de récupérer une entité à partir de ses coordonnées
 
-    Inventaire inventaire;
+    public Inventaire inventaire;
 
     public SimulateurPotager() {
 
@@ -123,6 +123,10 @@ public class SimulateurPotager {
         if(grilleCases[x][y] != null){
             ((CaseCultivable) grilleCases[x][y]).estCultivable = false;
         }
+    }
+
+    public Inventaire getInventaire(){
+        return inventaire;
     }
 
     private Case objetALaPosition(Point p) {
