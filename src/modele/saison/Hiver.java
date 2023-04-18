@@ -7,17 +7,17 @@ public class Hiver extends Environnement{
     }
     @Override
     void setHumidite() {
-        humidite = (rand.nextInt(31)) + 50; // Entre 50 et 80
+        humidite = (rand.nextInt(31)) + 45; // Entre 45 et 80
     }
 
     @Override
     void setEnsoleillement() {
-        ensoleillement = (float)( 0.3 + (0.5 - 0.3) * rand.nextFloat() ); // Entre 0.3 et 0.5
+        ensoleillement = (float)( 0.3 + (0.6 - 0.3) * rand.nextFloat() ); // Entre 0.3 et 0.6
     }
 
     @Override
     void setTemperature() {
-        temperature = 10 * rand.nextFloat();
+        temperature = -8 + 17 * rand.nextFloat();
     }
 
     @Override
