@@ -6,6 +6,7 @@ import modele.Ordonnanceur;
 import modele.environnement.CaseCultivable;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.util.Observable;
 import java.util.Observer;
@@ -30,6 +31,7 @@ public class InventaireVue implements Observer {
     JLabel labelSacADos = new JLabel();
 
     public InventaireVue(){
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
         Ordonnanceur.getOrdonnanceur().addObserver(this);
 
         labelSalade.setText("0");
@@ -48,7 +50,7 @@ public class InventaireVue implements Observer {
         labelSacADos.setFont(Police.getTitrePolice());
         labelSacADos.setIcon(iconesVue.getIcoSacADos());
 
-        inventairePanel.setBorder(BorderFactory.createEmptyBorder(10,10,10,10));
+        inventairePanel.setBorder(raisedbevel);
         GridLayout inventaireLayout = new GridLayout(0, 1, 0, 10);
         inventairePanel.setLayout(inventaireLayout);
         inventairePanel.add(labelSacADos);

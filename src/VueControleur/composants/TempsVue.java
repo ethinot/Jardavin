@@ -2,6 +2,7 @@ package VueControleur.composants;
 import VueControleur.composants.tempsComposants.*;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 
@@ -14,8 +15,10 @@ public class TempsVue {
     private Annee annee;
 
     public TempsVue() {
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
         tempsVueConteneur.setPreferredSize(new Dimension(200,0));
         tempsVueConteneur.setLayout(new GridLayout(5, 1, 20, 5));
+        tempsVueConteneur.setBorder(raisedbevel);
         titre = new Titre();
         heureMinuteSeconde = new HeureMinuteSeconde();
         leJ = new Jour();

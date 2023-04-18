@@ -6,6 +6,7 @@ import VueControleur.composants.meteoComposants.Saison;
 import VueControleur.composants.meteoComposants.Temperature;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 
 public class MeteoVue {
@@ -17,7 +18,9 @@ public class MeteoVue {
     private Saison saison;
 
     public MeteoVue() {
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
         meteoVueContainer.setLayout(new FlowLayout(FlowLayout.LEFT));
+        meteoVueContainer.setBorder(raisedbevel);
         humidite = new Humidite();
         ensoleillement = new Ensoleillement();
         temperature = new Temperature();

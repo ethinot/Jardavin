@@ -13,6 +13,7 @@ import modele.environnement.varietes.*;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -129,7 +130,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         setTitle("A vegetable garden");
         // on peut aussi lui passer un objet Dimension
         // on taille avant de setLocation pour éviter tous problèmes
-        setSize(700 , 500);
+        setSize(950 , 700);
         // par défaut HID_ON_CLOSE
         // ici si on avait deux JFRAM cela fermerait les deux si on en ferme q'une
         // donc c'est mieux d'utiliser DISPOSE_ON_CLOSE
@@ -139,10 +140,15 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         // Barre affichage de temps à l'EST
         add(tempsVue.getTempsVueConteneur(), BorderLayout.EAST);
+
+        //Barre d'inventaire
         add(inventaireVue.getInventaireVueConteneur(), BorderLayout.WEST);
 
         // Barre des températures au SUD
         add(meteoVue.getMeteoVueContainer(), BorderLayout.SOUTH);
+
+        Border raisedbevel = BorderFactory.createRaisedBevelBorder();
+        Border loweredetched = BorderFactory.createEtchedBorder();
 
 
         // Slide Bar pour accélération du temps
@@ -234,6 +240,7 @@ public class VueControleurPotager extends JFrame implements Observer {
         JPanel toolBar = new JPanel();
         GridLayout toolBarLayout = new GridLayout(1, 0);
         toolBar.setLayout(toolBarLayout);
+        toolBar.setBorder(raisedbevel);
         toolBar.add(bSalade);
         toolBar.add(bCarotte);
         toolBar.add(bTomate);
@@ -244,19 +251,31 @@ public class VueControleurPotager extends JFrame implements Observer {
 
         add(toolBar, BorderLayout.NORTH);
 
-        JComponent grilleJLabels = new JPanel(new GridLayout(sizeY, sizeX)); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
-
+        GridBagLayout gridCase = new GridBagLayout();
+        JComponent grilleJLabels = new JPanel(gridCase); // grilleJLabels va contenir les cases graphiques et les positionner sous la forme d'une grille
         tabJLabel = new JLabel[sizeX][sizeY];
+
+        grilleJLabels.setBackground(Color.decode("#7d7b7a"));
+        grilleJLabels.setBorder(loweredetched);
 
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 JLabel jlab = new JLabel();
-
+                GridBagConstraints gbc = new GridBagConstraints();
                 tabJLabel[x][y] = jlab; // on conserve les cases graphiques dans tabJLabel pour avoir un accès pratique à celles-ci (voir mettreAJourAffichage() )
-                grilleJLabels.add(jlab);
+                jlab.setBackground(Color.red);
+                jlab.setVisible(true);
+                gbc.gridx = x;
+                gbc.gridy = y;
+                gbc.fill = GridBagConstraints.BOTH;
+
+                gbc.anchor = GridBagConstraints.LINE_START;
+
+                grilleJLabels.add(jlab, gbc);
             }
         }
         add(grilleJLabels, BorderLayout.CENTER);
+
 
         // écouter les évènements
 

@@ -47,8 +47,8 @@ public class IconesVue {
 
         // image libre de droits utilisée pour les légumes : https://www.vecteezy.com/vector-art/2559196-bundle-of-fruits-and-vegetables-icons
         icoSalade = chargerIcone("Images/data.png", 0, 0, ICONE_WIDTH, ICONE_HEIGHT);
-        icoVide = chargerIcone("Images/Vide.png");
-        icoMur = chargerIcone("Images/Mur.png");
+        icoVide = chargerIcone("Images/Vide.png", 0, 0, 18, 19);
+        icoMur = chargerIcone("Images/fence.png", 0, 0, 512, 512);
         icoTerre = chargerIcone("Images/sol.png", 0, 0, 512, 512);
         icoCarotte = chargerIcone("Images/data.png", 1 * ICONE_ROW, 1 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
         icoChampignon = chargerIcone("Images/data.png", 1 * ICONE_ROW, 0 * ICONE_COLUMN, ICONE_WIDTH, ICONE_HEIGHT);
@@ -68,7 +68,7 @@ public class IconesVue {
         // charger une sous partie de l'image à partir de ses coordonnées dans urlIcone
         BufferedImage bi = getSubImage(urlIcone, x, y, w, h);
         // adapter la taille de l'image a la taille du composant (ici : 20x20)
-        return new ImageIcon(bi.getScaledInstance(20, 20, java.awt.Image.SCALE_SMOOTH));
+        return new ImageIcon(bi.getScaledInstance(30, 30, java.awt.Image.SCALE_SMOOTH));
     }
 
     // chargement de l'image entière comme icone
