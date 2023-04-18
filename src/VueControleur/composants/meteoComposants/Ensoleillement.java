@@ -11,7 +11,6 @@ import static java.lang.String.valueOf;
 public class Ensoleillement extends PatternComposant{
     public Ensoleillement() {
         super("Ensoleillement");
-        this.meteoComposantConteneur.setPreferredSize(new Dimension(130,62));
     }
     @Override
     void setEnvironnementValeur() {
