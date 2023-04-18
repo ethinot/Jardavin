@@ -25,7 +25,6 @@ public class Main {
         VueControleurPotager vc = new VueControleurPotager(simulateurPotager);
         vc.setVisible(true);
         Ordonnanceur.getOrdonnanceur().setSimulateurPotager(simulateurPotager);
-        Ordonnanceur.getOrdonnanceur().setInventaire(inventaire);
         Ordonnanceur.getOrdonnanceur().addObserver(vc);
         Ordonnanceur.getOrdonnanceur().start(2001, 4, 9);
     }

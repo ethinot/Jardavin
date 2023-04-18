@@ -1,18 +1,14 @@
 package modele;
 import modele.environnement.varietes.*;
 
-public class Inventaire {
+public class Inventaire{
 
-    int nbSalades;
-    int nbTomates;
-    int nbRadis;
-    int nbCarotte;
+    int nbSalades = 0;
+    int nbTomates = 0;
+    int nbRadis = 0;
+    int nbCarotte = 0;
 
     public Inventaire(){
-        nbSalades = 0;
-        nbTomates = 0;
-        nbRadis = 0;
-        nbCarotte = 0;
     }
 
     public int getNbSalades(){
@@ -40,4 +36,21 @@ public class Inventaire {
     public void setNbRadis(int nb){
         nbRadis = nb;
     }
+
+    public void ajoutSalade(){
+        this.nbSalades++;
+    }
+
+    public void ajoutCarotte(){
+        this.nbCarotte++;
+    }
+
+    public void ajoutTomate(){
+        this.nbTomates++;
+    }
+
+    public void ajoutRadis(){
+        this.nbRadis++;
+    }
+
 }

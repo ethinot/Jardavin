@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class IconesVue {
 
-    private IconesVue iconesVue;
+    private static IconesVue iconesVue;
 
     public IconesVue getIconesVue(){
         if(iconesVue == null){

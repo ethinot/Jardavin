@@ -23,20 +23,28 @@ public class InventaireVue implements Observer {
     private int updateNbTomates;
     private int updateNbRadis;
 
+    JLabel labelSalade = new JLabel();
+    JLabel labelCarotte = new JLabel();
+    JLabel labelTomate = new JLabel();
+    JLabel labelRadis = new JLabel();
+    JLabel labelSacADos = new JLabel();
+
     public InventaireVue(){
-        JLabel labelSalade = new JLabel(String.valueOf(updateNbSalades));
+        Ordonnanceur.getOrdonnanceur().addObserver(this);
+
+        labelSalade.setText("0");
         labelSalade.setIcon(iconesVue.getIcoSalade());
 
-        JLabel labelCarotte = new JLabel(String.valueOf(updateNbCarottes));
+        labelCarotte.setText("0");
         labelCarotte.setIcon(iconesVue.getIcoCarotte());
 
-        JLabel labelTomate = new JLabel(String.valueOf(updateNbTomates));
+        labelTomate.setText("0");
         labelTomate.setIcon(iconesVue.getIcoTomate());
 
-        JLabel labelRadis = new JLabel(String.valueOf(updateNbRadis));
+        labelRadis.setText("0");
         labelRadis.setIcon(iconesVue.getIcoRadis());
 
-        JLabel labelSacADos = new JLabel("Inventaire");
+        labelSacADos.setText("Inventaire");
         labelSacADos.setFont(Police.getTitrePolice());
         labelSacADos.setIcon(iconesVue.getIcoSacADos());
 
@@ -60,10 +68,10 @@ public class InventaireVue implements Observer {
         updateNbCarottes = Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().getNbCarotte();
         updateNbTomates = Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().getNbTomates();
         updateNbRadis = Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().getNbRadis();
-        Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().setNbSalades(updateNbSalades);
-        Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().setNbCarotte(updateNbCarottes);
-        Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().setNbTomates(updateNbTomates);
-        Ordonnanceur.getOrdonnanceur().getSimulateurPotager().getInventaire().setNbRadis(updateNbRadis);
 
+        labelSalade.setText(String.valueOf(updateNbSalades));
+        labelCarotte.setText(String.valueOf(updateNbCarottes));
+        labelTomate.setText(String.valueOf(updateNbTomates));
+        labelRadis.setText(String.valueOf(updateNbRadis));
     }
 }

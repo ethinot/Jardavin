@@ -10,8 +10,8 @@ import java.time.LocalDateTime;
 
 public class Salade extends Legume {
 
-    IconesVue iconesVue;
     public Salade(){
+        iconeLegume = new IconesVue().getIcoSalade();
         conditionsFavorable = new SaladeCondition();
         System.out.println("Vous avez planté votre salade le " + jourDePlantage + " de ce mois");
         if(jourDeRecolte < jourDePlantage){

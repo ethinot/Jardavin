@@ -4,10 +4,13 @@ import modele.environnement.varietes.conditionsCroissance.Conditions;
 import modele.saison.Saisons;
 import modele.temps.TempsModel;
 
+import javax.swing.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
 public abstract class Legume {
+
+    public ImageIcon iconeLegume;
 
     protected TempsModel temps = TempsModel.getTemps();
 

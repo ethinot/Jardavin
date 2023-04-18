@@ -100,16 +100,12 @@ public class SimulateurPotager {
         if(grilleCases[x][y] != null && grilleCases[x][y] instanceof CaseCultivable){
 
             switch (_legume.getVariete()) {
-                case salade: inventaire.nbSalades++; break;
-                case carotte: inventaire.nbCarotte++; break;
-                case tomate: inventaire.nbTomates++; break;
-                case radis: inventaire.nbRadis++; break;
+                case salade: inventaire.ajoutSalade(); break;
+                case carotte: inventaire.ajoutCarotte(); break;
+                case tomate: inventaire.ajoutTomate(); break;
+                case radis: inventaire.ajoutRadis(); break;
             }
         }
-        System.out.println("NbSalades : " + inventaire.nbSalades);
-        System.out.println("NbTomates : " + inventaire.nbTomates);
-        System.out.println("NbCarottes : " + inventaire.nbCarotte);
-        System.out.println("NbRadis : " + inventaire.nbRadis);
 
     }
 
@@ -119,11 +115,6 @@ public class SimulateurPotager {
         }
     }
 
-    public void rendreIncultivable(int x, int y){
-        if(grilleCases[x][y] != null){
-            ((CaseCultivable) grilleCases[x][y]).estCultivable = false;
-        }
-    }
 
     public Inventaire getInventaire(){
         return inventaire;
