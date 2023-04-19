@@ -7,6 +7,7 @@ import modele.SimulateurPotager;
 import modele.environnement.CaseCultivable;
 import modele.environnement.CaseNonCultivable;
 import modele.environnement.varietes.*;
+import modele.saison.Saisons;
 
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -23,31 +24,9 @@ import java.util.Observer;
  *
  */
 public class VueControleurPotager extends JFrame implements Observer {
-
-
     //region Tailles grille
     private final int sizeX; // taille de la grille affichée
     private final int sizeY;
-    //endregion
-
-    //region Icones
-    // icones affichées dans la grille
-    private ImageIcon icoSalade;
-    private ImageIcon icoCarotte;
-    private ImageIcon icoTerre;
-    private ImageIcon icoVide;
-    private ImageIcon icoMur;
-    private ImageIcon icoChampignon;
-    private ImageIcon icoOrange;
-    private ImageIcon icoTomate;
-    private ImageIcon icoRadis;
-    private ImageIcon icoRateau;
-    private ImageIcon icoPelle;
-    private ImageIcon icoPousse;
-    private ImageIcon icoHerbe;
-    private ImageIcon icoSacADos;
-    //endregion
-
     // Grille du potager
     private SimulateurPotager simulateurPotager; // référence sur une classe de modèle : permet d'accéder aux données du modèle pour le rafraichissement, permet de communiquer les actions clavier (ou souris)
     private Legume legumeEnMain;
@@ -60,7 +39,6 @@ public class VueControleurPotager extends JFrame implements Observer {
     private TempsVue tempsVue;
     private InventaireVue inventaireVue;
     private IconesVue iconesVue;
-
     private MeteoVue meteoVue;
 
     private JFrame infosCroissance = new JFrame();
@@ -78,6 +56,24 @@ public class VueControleurPotager extends JFrame implements Observer {
         meteoVue = new MeteoVue();
         //chargerLesIcones();
         placerLesComposantsGraphiques();
+    }
+
+    void setHerbeEnvironnement(int x, int y) {
+        String saisonsActuelle = simulateurPotager.getSimMet().getSaisonActuelle();
+        switch (saisonsActuelle) {
+            case "ete" :
+                tabJLabel[x][y].setIcon(iconesVue.getIcoHerbeEte());
+                break;
+            case "printemps" :
+                tabJLabel[x][y].setIcon(iconesVue.getIcoHerbePrintemps());
+                break;
+            case "automne" :
+                tabJLabel[x][y].setIcon(iconesVue.getIcoHerbeAutomne());
+                break;
+            case "hiver" :
+                tabJLabel[x][y].setIcon(iconesVue.getIcoHerbeHiver());
+                break;
+        }
     }
 /*
     private void ajouterEcouteurClavier() {
@@ -385,8 +381,7 @@ public class VueControleurPotager extends JFrame implements Observer {
                 } else if (simulateurPotager.getPlateau()[x][y] instanceof CaseNonCultivable) {
                     tabJLabel[x][y].setIcon(iconesVue.getIcoMur());
                 } else {
-
-                    tabJLabel[x][y].setIcon(iconesVue.getIcoVide());
+                    setHerbeEnvironnement(x,y);
                 }
             }
         }

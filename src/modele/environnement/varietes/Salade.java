@@ -54,15 +54,4 @@ public class Salade extends Legume {
         System.out.println("temps de croissance en heures : " + tempsDeCroissanceEnHeures);;
         System.out.println("Taux de croissance " + df.format(tauxCroissance) + " %");
     }
-
-    public ImageIcon getIcone(){
-        return iconeLegume;
-    }
-
-    public ImageIcon setIcone(ImageIcon icon, int NEW_WIDTH, int NEW_HEIGHT, int croissanceEnCours) {
-        Image img = icon.getImage() ;
-        Image newimg = img.getScaledInstance( NEW_WIDTH + (croissanceEnCours / 5), NEW_HEIGHT + (croissanceEnCours / 5),  java.awt.Image.SCALE_SMOOTH ) ;
-        return icon = new ImageIcon( newimg );
-    }
-
 }

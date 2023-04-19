@@ -46,6 +46,11 @@ public class IconesVue {
     private ImageIcon icoPelle;
     private ImageIcon icoPousse;
     private ImageIcon icoHerbe;
+    private ImageIcon icoHerbeEte;
+    private ImageIcon icoHerbePrintemps;
+    private ImageIcon icoHerbeAutomne;
+    private ImageIcon icoHerbeHiver;
+
     private ImageIcon icoSacADos;
     private ImageIcon icoPrintemps;
     private ImageIcon icoEte;
@@ -79,6 +84,10 @@ public class IconesVue {
         icoPelle = chargerIcone("Images/pelle.png", 0, 0, 512, 512);
         icoPousse = chargerIcone("Images/pousse.png", 0, 0, 512, 512);
         icoHerbe = chargerIcone("Images/herbe.png", 0 ,0, 512, 512);
+        icoHerbeEte = chargerIcone("Images/herbe-ete.png", 0, 0, 512, 512);
+        icoHerbePrintemps = chargerIcone("Images/herbe-print.png", 0, 0, 512, 512);
+        icoHerbeAutomne = chargerIcone("Images/herbe-autom.png", 0, 0, 512, 512);
+        icoHerbeHiver = chargerIcone("Images/herbe-neige.png", 0, 0, 512, 512);
         icoSacADos = chargerIcone("Images/sac-a-dos.png", 0, 0, 512, 512);
         icoPrintemps = chargerIcone("Images/spring.png", 0, 0, 512, 512);
         icoEte = chargerIcone("Images/summer.png", 0, 0, 512, 512);
@@ -147,6 +156,10 @@ public class IconesVue {
     public ImageIcon getIcoPelle(){return icoPelle; }
     public ImageIcon getIcoPousse(){return icoPousse; }
     public ImageIcon getIcoHerbe(){return icoHerbe; }
+    public ImageIcon getIcoHerbeHiver(){return icoHerbeHiver; }
+    public ImageIcon getIcoHerbeEte(){return icoHerbeEte; }
+    public ImageIcon getIcoHerbePrintemps(){return icoHerbePrintemps; }
+    public ImageIcon getIcoHerbeAutomne(){return icoHerbeAutomne; }
     public ImageIcon getIcoPrintemps(){return icoPrintemps; }
     public ImageIcon getIcoEte(){return icoEte; }
     public ImageIcon getIcoAutomne(){return icoAutomne; }
