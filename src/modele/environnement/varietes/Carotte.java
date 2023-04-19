@@ -1,6 +1,6 @@
 package modele.environnement.varietes;
 
-import VueControleur.composants.IconesVue;
+import VueControleur.IconesVue;
 import modele.environnement.varietes.conditionsCroissance.CarotteCondition;
 import modele.environnement.varietes.conditionsCroissance.SaladeCondition;
 
