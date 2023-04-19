@@ -1,15 +1,10 @@
-package VueControleur.composants;
-
-import VueControleur.VueControleurPotager;
+package VueControleur;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Field;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -56,9 +51,17 @@ public class IconesVue {
     private ImageIcon icoEte;
     private ImageIcon icoAutomne;
     private ImageIcon icoHiver;
-    private ImageIcon icoHumidite;
-    private ImageIcon icoTemperature;
-    private ImageIcon icoTemps;
+    private ImageIcon icoHumiditeFaible;
+    private ImageIcon icoHumiditeMoyenne;
+    private ImageIcon icoHumiditeForte;
+    private ImageIcon icoTemperatureFroid;
+    private ImageIcon icoTemperatureMoyenne;
+    private ImageIcon icoTemperatureChaud;
+    private ImageIcon icoNuagePluit;
+    private ImageIcon icoNuage;
+    private ImageIcon icoNuageSoleil;
+    private ImageIcon icoSoleil;
+    private ImageIcon icoHorloge;
 
     public void chargerLesIcones() {
 
@@ -81,9 +84,17 @@ public class IconesVue {
         icoEte = chargerIcone("Images/summer.png", 0, 0, 512, 512);
         icoAutomne = chargerIcone("Images/fall.png", 0, 0, 512, 512);
         icoHiver = chargerIcone("Images/winter.png", 0, 0, 512, 512);
-        icoHumidite = chargerIcone("Images/goutte-eau.png", 0, 0, 512, 512);
-        icoTemperature = chargerIcone("Images/thermometre.png", 0, 0, 512, 512);
-        icoTemps = chargerIcone("Images/soleil.png", 0, 0, 512, 512);
+        icoHumiditeFaible = chargerIcone("Images/faible-humidité.png", 0, 0, 512, 512);
+        icoHumiditeMoyenne = chargerIcone("Images/moyenne-humidité.png", 0, 0, 512, 512);
+        icoHumiditeForte = chargerIcone("Images/forte-humidité.png", 0, 0, 512, 512);
+        icoTemperatureFroid = chargerIcone("Images/thermometre-froid.png", 0, 0, 512, 512);
+        icoTemperatureMoyenne = chargerIcone("Images/thermometre-moyen.png", 0, 0, 512, 512);
+        icoTemperatureChaud = chargerIcone("Images/thermometre-chaud.png", 0, 0, 512, 512);
+        icoNuagePluit = chargerIcone("Images/nuage-pluit.png", 0, 0, 512, 512);
+        icoNuage = chargerIcone("Images/nuage.png", 0, 0, 512, 512);
+        icoNuageSoleil = chargerIcone("Images/nuages-et-soleil.png", 0, 0, 512, 512);
+        icoSoleil = chargerIcone("Images/soleil.png", 0, 0, 512, 512);
+        icoHorloge = chargerIcone("Images/horloge.png", 0, 0, 512, 512);
     }
 
     // chargement d'une sous partie de l'image
@@ -140,8 +151,17 @@ public class IconesVue {
     public ImageIcon getIcoEte(){return icoEte; }
     public ImageIcon getIcoAutomne(){return icoAutomne; }
     public ImageIcon getIcoHiver(){return icoHiver; }
-    public ImageIcon getIcoHumidite(){return icoHumidite; }
-    public ImageIcon getIcoTemperature(){return icoTemperature; }
-    public ImageIcon getIcoTemps(){return icoTemps; }
+    public ImageIcon getIcoHumiditeFaible(){return icoHumiditeFaible; }
+    public ImageIcon getIcoHumiditeMoyenne(){return icoHumiditeMoyenne; }
+    public ImageIcon getIcoHumiditeForte(){return icoHumiditeForte; }
+    public ImageIcon getIcoTemperatureFroid(){return icoTemperatureFroid; }
+    public ImageIcon getIcoTemperatureMoyenne(){return icoTemperatureMoyenne; }
+    public ImageIcon getIcoTemperatureChaud(){return icoTemperatureChaud; }
+    public ImageIcon getIcoNuagePluit(){return icoNuagePluit; }
+    public ImageIcon getIcoNuage(){return icoNuage; }
+    public ImageIcon getIcoNuageSoleil(){return icoNuageSoleil; }
+    public ImageIcon getIcoSoleil(){return icoSoleil; }
+    public ImageIcon getIcoSacADos(){return icoSacADos; }
+    public ImageIcon getIcoHorloge(){return icoHorloge; }
 }
 

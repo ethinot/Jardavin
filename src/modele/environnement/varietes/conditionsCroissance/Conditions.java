@@ -22,19 +22,13 @@ public abstract class Conditions {
 
     public double getTauxCroissance(int humiditeActuelle, float ensoleillementActuel, float temperatureActuelle, Saisons saisonActuelle) {
         double tauxCroissance = 1.0;
-        double ecartSaison;
-        if (saisonIdeal != saisonActuelle) {
-            ecartSaison = 0.40;
-        } else {
-            ecartSaison = 0.0;
-        }
-        // Plus 5% de marge d'erreur
+        double ecartSaison = 0.0;
+        if (saisonIdeal != saisonActuelle) { ecartSaison = 0.40; }
         if ((humiditeActuelle >= humiditeIdeale && humiditeActuelle < humiditeIdeale * 1.05) &&
             (ensoleillementActuel >= ensoleillementIdeale && ensoleillementActuel < ensoleillementIdeale * 1.05) &&
             (temperatureActuelle >= temperatureIdeal && temperatureActuelle < temperatureIdeal * 1.05) &&
-            saisonActuelle == saisonIdeal) {
-            tauxCroissance = 1.0;
-        } else {
+            saisonActuelle == saisonIdeal) tauxCroissance = 1.0;
+        else {
             double ecartHumidite = Math.abs(humiditeActuelle - humiditeIdeale) / 100.0;
             double ecartEnsoleillement = Math.abs(ensoleillementActuel - ensoleillementIdeale);
             double ecartTemperature = Math.abs(temperatureActuelle - temperatureIdeal) / 50.0;

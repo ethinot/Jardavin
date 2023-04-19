@@ -1,8 +1,7 @@
 package VueControleur.composants.meteoComposants;
 
-import VueControleur.composants.IconesVue;
+import VueControleur.IconesVue;
 import modele.Ordonnanceur;
-import modele.temps.TempsModel;
 
 import java.util.Observable;
 

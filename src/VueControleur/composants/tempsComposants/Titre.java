@@ -1,5 +1,6 @@
 package VueControleur.composants.tempsComposants;
 
+import VueControleur.IconesVue;
 import VueControleur.Style.Police;
 import modele.temps.TempsModel;
 
@@ -16,8 +17,9 @@ public class Titre implements ActionListener {
     public Titre() {
         titleConteneur.setLayout(new BoxLayout(titleConteneur, BoxLayout.Y_AXIS));
         title.setText("Temps");
+        title.setIcon(IconesVue.getIconesVue().getIcoHorloge());
         title.setFont(Police.getTitrePolice());
-        title.setPreferredSize(new Dimension(65, 25));
+        title.setPreferredSize(new Dimension(65, 30));
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         stopButton.setAlignmentX(Component.CENTER_ALIGNMENT);
         stopButton.addActionListener(this);

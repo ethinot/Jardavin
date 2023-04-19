@@ -91,9 +91,15 @@ public class SimulateurMeteo implements Runnable {
     public int getHumiditeActuelle() {
         return humiditeActuelle;
     }
+    public float getEnsoillementFloat() {
+        return ensoleillementActuel;
+    }
     public String getEnsoleillementActuel() {
         String soleil = df.format(ensoleillementActuel * 100);
         return soleil + " %";
+    }
+    public float getTemperatureArrondis() {
+        return temperatureActuelle;
     }
     public String getTemperatureActuelle() {
         String tempera = df.format(temperatureActuelle);
