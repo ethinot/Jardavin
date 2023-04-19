@@ -5,6 +5,7 @@ import modele.saison.Saisons;
 import modele.temps.TempsModel;
 
 import javax.swing.*;
+import java.awt.*;
 import java.text.DecimalFormat;
 import java.time.LocalDateTime;
 
@@ -42,6 +43,15 @@ public abstract class Legume {
 
     public void setTauxCroissance(int humide, float soleil, float temps, Saisons saison) {
         tauxCroissance = conditionsFavorable.getTauxCroissance(humide, soleil, temps, saison);
+    }
+
+    public ImageIcon getIcone(){
+        return iconeLegume;
+    }
+    public ImageIcon setIcone(ImageIcon icon, int NEW_WIDTH, int NEW_HEIGHT, int croissanceEnCours) {
+        Image img = icon.getImage() ;
+        Image newimg = img.getScaledInstance( NEW_WIDTH + (croissanceEnCours / 5), NEW_HEIGHT + (croissanceEnCours / 5),  java.awt.Image.SCALE_SMOOTH ) ;
+        return icon = new ImageIcon( newimg );
     }
 
     protected DecimalFormat df = new DecimalFormat("0.00");

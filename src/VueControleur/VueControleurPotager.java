@@ -261,6 +261,9 @@ public class VueControleurPotager extends JFrame implements Observer {
         for (int y = 0; y < sizeY; y++) {
             for (int x = 0; x < sizeX; x++) {
                 JLabel jlab = new JLabel();
+                if(simulateurPotager.getPlateau()[x][y] instanceof CaseCultivable && ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume() != null){
+                    jlab = setSizeIcones(x, y, simulateurPotager, ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume());
+                }
                 GridBagConstraints gbc = new GridBagConstraints();
                 tabJLabel[x][y] = jlab; // on conserve les cases graphiques dans tabJLabel pour avoir un accès pratique à celles-ci (voir mettreAJourAffichage() )
                 jlab.setBackground(Color.red);
@@ -272,6 +275,8 @@ public class VueControleurPotager extends JFrame implements Observer {
                 gbc.anchor = GridBagConstraints.LINE_START;
 
                 grilleJLabels.add(jlab, gbc);
+
+
             }
         }
         add(grilleJLabels, BorderLayout.CENTER);
@@ -338,6 +343,25 @@ public class VueControleurPotager extends JFrame implements Observer {
         infosCroissance.add(infos, BorderLayout.CENTER);
     }
 
+    public JLabel setSizeIcones(int x, int y, SimulateurPotager simPot, Legume _legume){
+        JLabel jlb = new JLabel();
+        switch (_legume.getVariete()){
+            case salade -> {
+                jlb.setIcon(((CaseCultivable) simPot.getPlateau()[x][y]).getLegume().setIcone(_legume.iconeLegume, 10, 10, (int) ((Salade) ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume()).croissanceEnCours));
+            }
+            case carotte -> {
+                jlb.setIcon(((CaseCultivable) simPot.getPlateau()[x][y]).getLegume().setIcone(_legume.iconeLegume, 10, 10, (int) ((Carotte) ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume()).croissanceEnCours));
+            }
+            case tomate -> {
+                jlb.setIcon(((CaseCultivable) simPot.getPlateau()[x][y]).getLegume().setIcone(_legume.iconeLegume, 10, 10, (int) ((Tomate) ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume()).croissanceEnCours));
+            }
+            case radis -> {
+                jlb.setIcon(((CaseCultivable) simPot.getPlateau()[x][y]).getLegume().setIcone(_legume.iconeLegume, 10, 10, (int) ((Radis) ((CaseCultivable) simulateurPotager.getPlateau()[x][y]).getLegume()).croissanceEnCours));
+            }
+        }
+        return jlb;
+    }
+
 
     /**
      * Il y a une grille du côté du modèle ( jeu.getGrille() ) et une grille du côté de la vue (tabJLabel)
@@ -353,10 +377,10 @@ public class VueControleurPotager extends JFrame implements Observer {
                     if (legume != null) {
 
                         switch (legume.getVariete()) {
-                            case salade: tabJLabel[x][y].setIcon(iconesVue.getIcoSalade()); break;
-                            case carotte: tabJLabel[x][y].setIcon(iconesVue.getIcoCarotte()); break;
-                            case tomate: tabJLabel[x][y].setIcon(iconesVue.getIcoTomate()); break;
-                            case radis: tabJLabel[x][y].setIcon(iconesVue.getIcoRadis()); break;
+                            case salade: tabJLabel[x][y].setIcon(((Salade) legume).setIcone(((Salade) legume).getIcone(), 10, 10, (int) legume.croissanceEnCours)); break;
+                            case carotte: tabJLabel[x][y].setIcon(((Carotte) legume).setIcone(((Carotte) legume).getIcone(), 10, 10, (int) legume.croissanceEnCours)); break;
+                            case tomate: tabJLabel[x][y].setIcon(((Tomate) legume).setIcone(((Tomate) legume).getIcone(), 10, 10, (int) legume.croissanceEnCours)); break;
+                            case radis: tabJLabel[x][y].setIcon(((Radis) legume).setIcone(((Radis) legume).getIcone(), 10, 10, (int) legume.croissanceEnCours)); break;
                         }
                     }else if(!((CaseCultivable) simulateurPotager.getPlateau()[x][y]).estCultivable){
                         tabJLabel[x][y].setIcon(iconesVue.getIcoHerbe());
